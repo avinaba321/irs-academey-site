@@ -37,7 +37,7 @@
                         <span class="badge bg-light text-primary px-3 py-2">PREMIUM ONLINE COURSES</span>
 
                         <h1 class="fw-bold mt-4" style="font-size:65px; line-height:1.15;">
-                            Upgrade your <br> skills and <br> knowledge.
+                            Upgrade Your <br> Skills & <br> Knowledge.
                         </h1>
 
                         <p class="text-secondary mt-3">
