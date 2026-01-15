@@ -1,0 +1,138 @@
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+:root {}
+
+/* SECTION */
+.about-section {
+  position: relative;
+  background: rgb(255, 187, 0);
+  padding: 120px 0;
+  overflow: hidden;
+}
+
+/* LEFT DOT PATTERN */
+.about-section::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: 80px;
+  width: 130px;
+  height: 130px;
+  background-image: radial-gradient(#fff2cf 2px, transparent 2px);
+  background-size: 16px 16px;
+  opacity: 0.6;
+}
+
+/* RIGHT CURVED SHAPE */
+.about-section::after {
+  content: '';
+  position: absolute;
+  right: -140px;
+  top: -120px;
+  width: 420px;
+  height: 420px;
+  background: linear-gradient(180deg, #fff2e1, #ffefe8);
+  border-radius: 50% 0 50% 50%;
+}
+
+/* CONTENT BOX */
+.about-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* INNER RECTANGLE SHAPE */
+.about-content::after {
+  content: '';
+  position: absolute;
+  right: -60px;
+  bottom: -80px;
+  width: 280px;
+  height: 280px;
+  background: linear-gradient(180deg, #facc15, #ffffff);
+  border-radius: 20px;
+  opacity: 0.8;
+  z-index: -1;
+}
+
+/* TEXT */
+.about-content h2 {
+  font-size: 44px;
+  font-weight: 700;
+  color: #2b1a5a;
+  margin-bottom: 20px;
+}
+
+.about-content p {
+  font-size: 18px;
+  color: #4b3c7a;
+  line-height: 1.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .about-content h2 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-content h2 {
+    font-size: 30px;
+  }
+
+  .about-content p {
+    font-size: 16px;
+  }
+
+  .about-section::after {
+    width: 260px;
+    height: 260px;
+    right: -100px;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .about-section::before,
+  .about-content::after {
+    display: none;
+  }
+}
+
+
+/* ================gallary section area =================== */
+.photo-gallery {
+  background: #f9f9f9;
+}
+
+.gallery-card {
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  transition: 0.4s ease;
+  
+}
+
+.gallery-img {
+  cursor: pointer;
+}
+
+
+.gallery-card:hover img {
+  transform: scale(1.08);
+}
+
+/* Modal image */
+#modalImage {
+  max-height: 80vh;
+}
