@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function view()
+    {
+        return view('Auth_Modal.login-modal');
+    }
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -28,7 +32,7 @@ class LoginController extends Controller
 
         // ✅ Student login
         if (Auth::guard('student')->attempt($credentials)) {
-            return redirect()->route('student.dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         // ❌ Failed

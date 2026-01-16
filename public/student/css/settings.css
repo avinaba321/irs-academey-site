@@ -1,0 +1,183 @@
+:root {
+    --bg: #070707;
+    --panel: rgba(255, 255, 255, 0.06);
+    --panel2: rgba(255, 255, 255, 0.02);
+    --stroke: rgba(255, 255, 255, 0.12);
+
+    --text: #f5f5f5;
+    --muted: rgba(255, 255, 255, 0.55);
+
+    --orange: #ff7a18;
+    --yellow: #ffcc00;
+
+    --green: #22c55e;
+    --red: #ff4d5b;
+}
+
+* {
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        radial-gradient(1000px 600px at 20% 16%, rgba(255, 122, 24, 0.18), transparent 58%),
+        radial-gradient(900px 520px at 85% 70%, rgba(255, 204, 0, 0.12), transparent 60%),
+        var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+    overflow-x: hidden;
+    padding: 26px 14px 60px;
+}
+
+.wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ✅ Premium card */
+.p-card {
+    position: relative;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.60);
+    overflow: hidden;
+}
+
+.p-card::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 24px;
+    padding: 2px;
+    background: linear-gradient(135deg,
+            rgba(255, 122, 24, 0.55),
+            rgba(255, 204, 0, 0.24),
+            rgba(255, 122, 24, 0.18));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* ✅ page header */
+.page-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 900;
+    margin: 0;
+}
+
+.page-sub {
+    margin-top: 6px;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+/* ✅ tabs right */
+.settings-card {
+    padding: 16px;
+}
+
+.nav-pills .nav-link {
+    border-radius: 14px;
+    padding: 12px 12px;
+    font-weight: 900;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    background: rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    margin-bottom: 8px;
+}
+
+.nav-pills .nav-link.active {
+    color: #111;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    border: none;
+    box-shadow: 0 18px 38px rgba(255, 122, 24, 0.18);
+}
+
+/* Form control premium */
+.form-label {
+    font-weight: 900;
+    font-size: 12px;
+    color: rgba(255, 204, 0, 0.92);
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.20);
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 700;
+    font-size: 12px;
+    padding: 12px 12px;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.40);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: rgba(255, 204, 0, 0.35);
+    box-shadow: 0 0 0 .2rem rgba(255, 204, 0, .08);
+    background: rgba(0, 0, 0, 0.22);
+    color: #fff;
+}
+
+/* Save button */
+.btn-save {
+    border: 0;
+    border-radius: 14px;
+    font-weight: 900;
+    font-size: 12px;
+    padding: 12px 16px;
+    color: #111;
+    background: linear-gradient(135deg, var(--orange), var(--yellow));
+    box-shadow: 0 18px 40px rgba(255, 122, 24, 0.18);
+}
+
+/* Toggle look */
+.form-switch .form-check-input {
+    width: 44px;
+    height: 22px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.form-switch .form-check-input:checked {
+    background-color: rgba(255, 204, 0, 0.85);
+    border-color: rgba(255, 204, 0, 0.90);
+}
+
+/* Danger zone */
+.danger-box {
+    border-radius: 18px;
+    border: 1px solid rgba(255, 77, 91, 0.22);
+    background: rgba(255, 77, 91, 0.08);
+    padding: 14px;
+}
+
+.btn-danger-soft {
+    border-radius: 14px;
+    font-weight: 900;
+    font-size: 12px;
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 77, 91, 0.30);
+    background: rgba(255, 77, 91, 0.14);
+    color: rgba(255, 255, 255, 0.92);
+}

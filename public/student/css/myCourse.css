@@ -1,0 +1,314 @@
+:root {
+    --bg: #0b1222;
+    --panel: rgba(255, 255, 255, 0.04);
+    --panel2: rgba(255, 255, 255, 0.02);
+    --stroke: rgba(255, 255, 255, 0.10);
+    --stroke2: rgba(255, 255, 255, 0.14);
+    --text: #eaf1ff;
+    --muted: rgba(255, 255, 255, 0.60);
+
+    --brand: #fff01d;
+    --brand2: #5b5dff;
+    --success: #22c55e;
+    --gold: #f5c400;
+    --danger: #ff5a7a;
+}
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background:
+        radial-gradient(900px 520px at 18% 18%, rgba(255, 183, 29, 0.14), transparent 55%),
+        radial-gradient(900px 520px at 85% 70%, rgba(245, 196, 0, 0.10), transparent 55%),
+        var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+.page-wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 26px 14px 50px;
+}
+
+/* Title */
+.page-title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.page-title h3 {
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: .3px;
+    font-size: 22px;
+}
+
+.attempt-pill {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.22);
+    padding: 7px 12px;
+    border-radius: 999px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.attempt-pill i {
+    color: var(--brand);
+}
+
+/* Premium Card */
+.course-card {
+    position: relative;
+    border-radius: 22px;
+    border: 1px solid var(--stroke);
+    background: linear-gradient(180deg, var(--panel), var(--panel2));
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.40);
+    overflow: hidden;
+}
+
+/* gradient border */
+.course-card::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 24px;
+    padding: 2px;
+    background: linear-gradient(135deg,
+            rgba(29, 161, 255, 0.65),
+            rgba(91, 93, 255, 0.22),
+            rgba(245, 196, 0, 0.18));
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* top header section */
+.course-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px 10px;
+    position: relative;
+    z-index: 2;
+}
+
+.course-head .left h5 {
+    margin: 0 0 4px;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: .2px;
+}
+
+.course-head .left p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* premium label */
+.premium-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 999px;
+    padding: 8px 12px;
+    color: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(245, 196, 0, 0.22);
+    background: rgba(245, 196, 0, 0.10);
+    white-space: nowrap;
+}
+
+.premium-label i {
+    color: var(--gold);
+}
+
+/* chips */
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 18px 12px;
+    position: relative;
+    z-index: 2;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(0, 0, 0, 0.16);
+    color: rgba(255, 255, 255, 0.90);
+    text-transform: uppercase;
+    letter-spacing: .2px;
+}
+
+.chip.green {
+    border-color: rgba(34, 197, 94, 0.20);
+    background: rgba(34, 197, 94, 0.12);
+}
+
+.chip.blue {
+    border-color: rgba(251, 255, 29, 0.2);
+    background: rgba(255, 251, 29, 0.12);
+}
+
+.chip i {
+    font-size: 12px;
+}
+
+/* divider */
+.card-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    margin: 2px 18px 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* fee list */
+.fee-wrap {
+    padding: 14px 18px 18px;
+    position: relative;
+    z-index: 2;
+}
+
+.fee-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fee-row:last-child {
+    border-bottom: none;
+}
+
+.fee-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.fee-title {
+    font-weight: 700;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.88);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fee-title i {
+    color: var(--brand);
+    font-size: 13px;
+    opacity: .9;
+}
+
+.fee-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.fee-right {
+    font-weight: 800;
+    font-size: 12px;
+    color: rgba(234, 241, 255, 0.95);
+    white-space: nowrap;
+}
+
+.fee-right.discount {
+    color: rgba(34, 197, 94, 0.90);
+}
+
+.fee-right.due {
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 232, 29, 0.1);
+    border: 1px solid rgba(255, 251, 29, 0.18);
+    padding: 6px 12px;
+    border-radius: 999px;
+}
+
+/* bottom strip */
+.bottom-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 14px 18px;
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.16);
+}
+
+.strip-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.80);
+}
+
+.strip-item i {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.strip-item b {
+    color: rgba(234, 241, 255, 0.95);
+}
+
+/* responsive */
+@media (max-width: 576px) {
+    .page-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .course-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .fee-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .fee-right {
+        margin-left: auto;
+    }
+}

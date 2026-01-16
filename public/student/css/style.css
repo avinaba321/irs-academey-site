@@ -1,0 +1,504 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* ===== HIDE SIDEBAR SCROLLBAR (KEEP SCROLL WORKING) ===== */
+
+/* Chrome, Edge, Safari */
+.sidebar-nav::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+/* Firefox */
+.sidebar-nav {
+    scrollbar-width: none;
+    /* hide scrollbar */
+}
+
+/* IE / old Edge (safe) */
+.sidebar-nav {
+    -ms-overflow-style: none;
+}
+
+
+/* ================================================
+   PREMIUM SCROLLBAR (BLACK / ORANGE / YELLOW)
+=================================================== */
+
+/*===================Firefox==================*/
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #ffcc00 #0a0a0a;
+}
+
+/*================Chrome, Edge, Safari==================*/
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+    /* deep black */
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg,
+            #ff7a18,
+            #ffcc00);
+    border-radius: 999px;
+    border: 2px solid #0a0a0a;
+    box-shadow:
+        inset 0 0 6px rgba(0, 0, 0, 0.6),
+        0 0 8px rgba(255, 122, 24, 0.35);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg,
+            #ffcc00,
+            #ff7a18);
+}
+
+
+
+
+
+/* ============================================================= 
+                        Header Section  Css
+================================================================ */
+
+:root {
+    --sidebar-bg: black;
+    --sidebar-border: #1e293b;
+    --sidebar-text: #e5e7eb;
+    --sidebar-muted: #1A1F2E;
+    --primary: #6366f1;
+    --danger: #ef4444;
+    --orange: orange;
+    --yellow: yellow;
+}
+
+/* ===== BASE ===== */
+body {
+    margin: 0;
+    background-color: var(--sidebar-muted) !important;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    background: var(--sidebar-muted);
+    display: flex;
+    flex-direction: column;
+    transition: all .3s ease;
+    z-index: 1050;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65);
+
+}
+
+.sidebar.collapsed {
+    width: 80px
+}
+
+/*======================= Header ==================*/
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    border-bottom: 1px solid var(--sidebar-border);
+    box-shadow: 0 4px 6px rgba(255, 249, 249, 0.12);
+    background-color: var();
+}
+
+.logo-box {
+    display: flex;
+    justify-content: center;
+    margin: auto !important;
+    margin-bottom: 15px;
+    width: 42px;
+    height: 42px;
+}
+
+.logo-box img {
+    width: 90px;
+    animation: glow 3s ease-in-out infinite;
+}
+
+
+@keyframes glow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.637));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 18px rgb(255, 193, 7));
+    }
+}
+
+
+
+.logo-text p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--sidebar-muted)
+}
+
+/*==================== Toggle ==================*/
+.toggle-btn {
+    position: absolute;
+    right: -12px;
+    top: 67px;
+    width: 35px;
+    height: 35px;
+    background: orangered;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+    padding: 10px 20px !important;
+}
+
+/*==================== Menu ====================*/
+.sidebar-nav {
+    flex: 1;
+    padding: 15px 10px;
+    overflow-y: auto;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    color: var(--sidebar-text);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom:5px ;
+}
+
+.sidebar-link:hover {
+    background: #F9B217;
+    cursor: pointer;
+    width: 100% !important;
+    box-shadow: rgba(255, 196, 0, 0.35) 0px 5px 25px;
+}
+
+.sidebar-link.active {
+    background: #e4f6ff;
+    color: #000;
+    width: 100%;
+    box-shadow: rgba(255, 255, 255, 0.24) 0px 3px 15px 9px;
+}
+
+.sidebar-link i {
+    font-size: 18px;
+    min-width: 20px
+}
+
+/*================== Footer ==================*/
+.sidebar-footer {
+    padding: 12px;
+    border-top: 1px solid var(--sidebar-border);
+    box-shadow: 0 -6px 10px rgba(255, 255, 255, 0.15);
+
+}
+
+.sidebar-footer .sidebar-link {
+    color: var(--danger);
+    font-weight: 700;
+    width: 100% !important;
+}
+
+
+/*================== Collapse-text =======================*/
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed span {
+    display: none
+}
+
+.sidebar.collapsed .sidebar-link {
+    justify-content: center
+}
+
+/* ==================== NAVBAR ================== */
+.navbar-custom {
+    height: 64px;
+    background: #fff;
+    padding: 0 24px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 260px;
+    transition: .3s;
+    z-index: 1040;
+}
+
+.sidebar.collapsed~.navbar-custom {
+    left: 80px
+}
+
+
+#toggleIcon {
+    font-size: 25px !important;
+}
+
+/* =================== CONTENT =================== */
+.main-content {
+    margin-top: 64px;
+    margin-left: 260px;
+    padding: 24px;
+    transition: .3s;
+
+}
+
+.sidebar.collapsed~.main-content {
+    margin-left: 80px
+}
+
+/* ================== SEARCH + AVATAR ===================== */
+.navbar-custom {
+    background-color: #F9B217;
+    box-shadow: rgba(230, 181, 48, 0.575) 0px 5px 15px;
+    padding: 10px 20px !important;
+    height: 80px !important;
+}
+
+.search-input {
+    padding-left: 38px;
+    background: #f1f5f9;
+    border: none;
+    padding: 10px 20px !important;
+}
+
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+}
+
+.navbar-custom .dropdown {
+    padding: 0px !important;
+}
+
+.avatar {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: var(--yellow) !important;
+    color: var(--sidebar-muted) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600 !important;
+}
+
+/* ==================== MOBILE =================== */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .4);
+    display: none;
+    z-index: 1030;
+}
+
+
+
+/* ================== RESPONSIVE SIDEBAR (MD & BELOW) ============== */
+@media (max-width: 768px) {
+
+    .sidebar {
+        left: -260px;
+        width: 260px;
+        transition: 0.3s;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .navbar-custom {
+        left: 0 !important;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+    }
+
+    .toggle-btn {
+        display: none;
+    }
+
+    .overlay.show {
+        display: block;
+    }
+}
+
+
+/* =================== CLOSE BUTTON (MOBILE ONLY) =============== */
+.close-sidebar-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    z-index: 1100;
+    cursor: pointer;
+}
+
+
+.table-responsive {
+    border-radius: 16px !important;
+}
+
+
+table {
+    border-radius: 16px !important;
+}
+
+input {
+    border-radius: 16px !important;
+    border: 1px solid orange !important;
+}
+
+select {
+    border-radius: 16px !important;
+    border: 1px solid orange !important;
+}
+
+option {
+    border-radius: 16px !important;
+
+}
+
+.badge-status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+
+
+/* =================ALL TABLE MEDIA QUARIES =================== */
+
+@media screen and (max-width: 1370px) {
+    .table-responsive {
+        overflow-x: hidden !important;
+    }
+
+    .table {
+        min-width: 900px !important;
+        white-space: nowrap !important;
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap !important;
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    .table-responsive {
+        overflow-x: auto !important;
+    }
+
+    .table {
+        min-width: 900px !important;
+        white-space: nowrap !important;
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap !important;
+    }
+}
+
+
+
+
+
+/* ============================ALL STUDENT NOTIFICATION CSS ========================= */
+
+.notification-bell {
+    position: relative;
+    cursor: pointer;
+    background-color: #eef2ff !important;
+    border-radius: 10px !important;
+    padding: 10px 20px !important;
+}
+
+.notify-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background: red;
+    border-radius: 50%;
+}
+
+.dropdown-menu-notify {
+    width: 320px;
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.notify-header {
+    padding: 12px 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+}
+
+.notify-item {
+    padding: 12px 15px;
+    display: flex;
+    gap: 10px;
+    align-items: start;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.notify-item:last-child {
+    border-bottom: none;
+}
+
+.notify-item:hover {
+    background: #f8f9fa;
+}
+
+.notify-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e0e7ff;
+    color: #ca9738;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.notify-time {
+    font-size: 11px;
+    color: #6b7280;
+}
