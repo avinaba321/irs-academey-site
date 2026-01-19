@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'IrsDesign Academy')</title>
+    <title>@yield('title', 'Digital Marketing Course in Kolkata | IRS Design Academy')</title>
+    <meta name="description" content="Join IRS Design Academy for a digital marketing course in Kolkata with practical training, expert mentors & career support. Start your success today.">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
