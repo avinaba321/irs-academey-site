@@ -96,7 +96,7 @@
                 
                 <!-- Card 3 -->
                 <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="499" data-duration="3">
-                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&q=45"
+                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&q=40"
                             class="img-fluid rounded">
                         <div class="p-4"> <span class="badge bg-success">Copywriting</span>
                             <h5 class="course-title mt-2">Copywriting Psychology</h5>
@@ -108,7 +108,7 @@
                 <!-- Card 4 -->
                 <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="599" data-duration="5">
                     <div class="course-card p-2"> <img
-                            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&q=45"
+                            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&q=40"
                             class="img-fluid rounded">
                         <div class="p-4"> <span class="badge bg-info">Design</span>
                             <h5 class="course-title mt-2">UI/UX Design Masterclass</h5>
@@ -119,7 +119,7 @@
                 
                 <!-- Card 5 -->
                 <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="699" data-duration="4">
-                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&q=45"
+                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&q=40"
                             class="img-fluid rounded">
                         <div class="p-4"> <span class="badge bg-danger">Marketing</span>
                             <h5 class="course-title mt-2">Digital Marketing</h5>
@@ -131,7 +131,7 @@
                 <!-- Card 6 -->
                 <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="899" data-duration="7">
                     <div class="course-card p-2"> <img
-                            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=45"
+                            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=40"
                             class="img-fluid rounded">
                         <div class="p-4"> <span class="badge bg-dark">Programming</span>
                             <h5 class="course-title mt-2">Full Stack Web Development</h5>
@@ -143,7 +143,7 @@
                 <!-- Card 7 -->
                 <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="599" data-duration="5">
                     <div class="course-card p-2"> <img
-                            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&q=45"
+                            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&q=40"
                             class="img-fluid rounded">
                         <div class="p-4"> <span class="badge bg-info">Design</span>
                             <h5 class="course-title mt-2">UI/UX Design Masterclass</h5>
@@ -154,7 +154,7 @@
                 
                 <!-- Card 8 -->
                 <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="699" data-duration="4">
-                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1551434678-e076c223a692"
+                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&q=40"
                             class="img-fluid rounded">
                         <div class="p-4"> <span class="badge bg-danger">Marketing</span>
                             <h5 class="course-title mt-2">Digital Marketing</h5>
@@ -166,7 +166,7 @@
                 <!-- Card 9 -->
                 <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="899" data-duration="7">
                     <div class="course-card p-2"> <img
-                            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=45"
+                            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=40"
                             class="img-fluid rounded">
                         <div class="p-4"> <span class="badge bg-dark">Programming</span>
                             <h5 class="course-title mt-2">Full Stack Web Development</h5>

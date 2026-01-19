@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-10 text-center about-content">
-                    <h2>About us</h2>
+                    <h1>About us</h1>
                     <p>
                         Join our community of learners and start your<br class="d-none d-md-block">
                         journey towards success.

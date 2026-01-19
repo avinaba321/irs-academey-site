@@ -55,10 +55,10 @@
                                 <td>Guardian Mobile:</td>
                                 <td>9593039722</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td>Guardian Email:</td>
                                 <td>sumon123@gmail.com</td>
-                            </tr>
+                            </tr> --}}
                         </table>
                     </div>
                 </div>

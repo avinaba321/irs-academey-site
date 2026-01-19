@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\StudentDashboradController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -85,51 +86,70 @@ Route::post('/login-submit', [LoginController::class,'login'])->name('login.subm
 //     Route::get('/student/dashboard',[AdminDashboradController::class,'index'])->name('student.dashboard');
 // });
 
-Route::get('/student/dashboard',[AdminDashboradController::class,'index'])->name('student.dashboard');
+// Route::get('/student/dashboard',[StudentDashboradController::class,'index'])->name('student.dashboard');
 
-Route::get('/student/my_profile', function () {
-    return view('Student.my_profile');
-})->name('my-profile');
+// Route::get('/student/my_profile', function () {
+//     return view('Student.my_profile');
+// })->name('my-profile');
 
-Route::get('/student/all_courses', function () {
-    return view('Student.all_courses');
-})->name('all-courses');
+// Route::get('/student/all_courses', function () {
+//     return view('Student.all_courses');
+// })->name('all-courses');
 
-Route::get('/student/my_courses', function () {
-    return view('Student.my_coures');
-})->name('my-courses');
+// Route::get('/student/my_courses', function () {
+//     return view('Student.my_coures');
+// })->name('my-courses');
 
-Route::get('/student/course_material', function () {
-    return view('Student.courses_material');
-})->name('course-material');
+// Route::get('/student/course_material', function () {
+//     return view('Student.courses_material');
+// })->name('course-material');
 
-Route::get('/student/course_module', function () {
-    return view('Student.course_module');
-})->name('course-module');
+// Route::get('/student/course_module', function () {
+//     return view('Student.course_module');
+// })->name('course-module');
 
-Route::get('/student/batches', function () {
-    return view('Student.batches');
-})->name('batches');
-
-
-Route::get('/student/payments', function () {
-    return view('Student.payments');
-})->name('payments');
+// Route::get('/student/batches', function () {
+//     return view('Student.batches');
+// })->name('batches');
 
 
-Route::get('/student/queries', function () {
-    return view('Student.queries');
-})->name('queries');
-
-Route::get('/student/certificate', function () {
-    return view('Student.certificate');
-})->name('certificate');
-
-Route::get('/student/settings', function () {
-    return view('Student.settings');
-})->name('settings');
+// Route::get('/student/payments', function () {
+//     return view('Student.payments');
+// })->name('payments');
 
 
-Route::get('/student/all_courses_details', function () {
-    return view('Student.all_courses_details');
-})->name('all-courses-details');
+// Route::get('/student/queries', function () {
+//     return view('Student.queries');
+// })->name('queries');
+
+// Route::get('/student/certificate', function () {
+//     return view('Student.certificate');
+// })->name('certificate');
+
+// Route::get('/student/settings', function () {
+//     return view('Student.settings');
+// })->name('settings');
+
+
+// Route::get('/student/all_courses_details', function () {
+//     return view('Student.all_courses_details');
+// })->name('all-courses-details');
+
+
+Route::middleware('auth:student')->group(function () {
+
+    Route::get('/student/dashboard',
+        [StudentDashboradController::class,'index']
+    )->name('student.dashboard');
+
+    Route::get('/student/my_profile', fn () => view('Student.my_profile'))->name('my-profile');
+    Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
+    Route::get('/student/my_courses', fn () => view('Student.my_coures'))->name('my-courses');
+    Route::get('/student/course_material', fn () => view('Student.courses_material'))->name('course-material');
+    Route::get('/student/batches', fn () => view('Student.batches'))->name('batches');
+    Route::get('/student/payments', fn () => view('Student.payments'))->name('payments');
+    Route::get('/student/queries', fn () => view('Student.queries'))->name('queries');
+    Route::get('/student/certificate', fn () => view('Student.certificate'))->name('certificate');
+    Route::get('/student/settings', fn () => view('Student.settings'))->name('settings');
+
+});

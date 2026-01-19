@@ -1,4 +1,7 @@
 
+@php
+    $student = Auth::guard('student')->user();
+@endphp
   <!-- NAVBAR -->
     <header class="navbar-custom d-flex align-items-center justify-content-between">
 
@@ -56,8 +59,8 @@
 
             <div class="dropdown">
                 <button class="btn btn-light d-flex align-items-center gap-2" data-bs-toggle="dropdown">
-                    <div class="avatar">SM</div>
-                    <span class="d-none d-md-inline">Sumon</span>
+                    <div class="avatar">{{ strtoupper(substr($student->full_name ?? 'S', 0, 1)) }}</div>
+                    <span class="d-none d-md-inline"> {{ $student->full_name ?? 'Student' }}</span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a href="./settings/settings.html" class="dropdown-item">Settings</a></li>
