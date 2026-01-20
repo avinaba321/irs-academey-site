@@ -30,7 +30,7 @@
                         <p class="course-desc">Premium React journey with hooks, projects, live classes and mentoring.
                         </p>
                         <div class="course-actions">
-                            <a href="{{ route('all-courses-details') }}" class="btn-soft text-center text-decoration-none"><i
+                            <a href="#" class="btn-soft text-center text-decoration-none"><i
                                     class="bi bi-eye-fill"></i> Details</a>
                             <button class="btn-primary-premium purchaseBtn"
                                 data-course="Full React JS Course & Training" data-price="45000"><i
@@ -53,7 +53,7 @@
                         <div class="divider"></div>
                         <p class="course-desc">Deep JS concepts + TS, interview prep, modern development patterns.</p>
                         <div class="course-actions">
-                            <a href="{{ route('all-courses-details') }}" class="btn-soft text-center text-decoration-none"><i
+                            <a href="#" class="btn-soft text-center text-decoration-none"><i
                                     class="bi bi-eye-fill"></i> Details</a>
                             <button class="btn-primary-premium purchaseBtn"
                                 data-course="Advance JavaScript & TypeScript" data-price="₹12,000"><i
@@ -76,7 +76,7 @@
                         <div class="divider"></div>
                         <p class="course-desc">Build responsive premium websites with real dashboard components.</p>
                         <div class="course-actions">
-                            <a href="{{ route('all-courses-details') }}" class="btn-soft text-center text-decoration-none"><i
+                            <a href="#" class="btn-soft text-center text-decoration-none"><i
                                     class="bi bi-eye-fill"></i> Details</a>
                             <button class="btn-primary-premium purchaseBtn" data-course="HTML CSS Bootstrap Masterclass"
                                 data-price="₹9,000"><i class="bi bi-bag-plus-fill"></i>

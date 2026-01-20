@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background:
+        linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)),
+        url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Wrapper */
+.auth-wrapper {
+    width: 100%;
+    padding: 20px;
+}
+
+/* Card */
+.auth-card {
+    max-width: 420px;
+    margin: auto;
+    background: linear-gradient(180deg, #0f172a, #020617);
+    border-radius: 18px;
+    padding: 40px 30px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, .6);
+    color: #fff;
+}
+
+/* Logo */
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo span {
+    font-size: 38px;
+    font-weight: 800;
+    background: linear-gradient(90deg, gold, #ffae00);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.logo small {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: .7;
+}
+
+/* Headings */
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 13px;
+    opacity: .7;
+    margin-bottom: 30px;
+}
+
+/* Input */
+.form-group {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.form-group i {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    opacity: .6;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 42px;
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    color: #fff;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: gold;
+}
+
+.toggle {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: .7;
+}
+
+/* Options */
+.options {
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+/* ================= SIGNUP BUTTON ================= */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #000;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-submit a{
+    color: #1f2937 !important;
+    text-decoration: none !important;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(255, 193, 7, .45);
+}
+
+.btn-submit:active {
+    transform: scale(.96);
+}
+
+/* Footer */
+.footer-text {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 18px;
+}
+
+.footer-text a {
+    color: gold;
+    text-decoration: none;
+}
+
+/* Status */
+.system-status {
+    text-align: center;
+    font-size: 12px;
+    color: #22c55e;
+    margin-top: 16px;
+}
+
+
+/* =================== eye button of password right position ================== */
+
+.form-group {
+    position: relative !important;
+}
+
+.form-group .toggle {
+    position: absolute !important;
+    top: 50%;
+    left: 90% !important;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.form-group .toggle:hover {
+    opacity: 1;
+}

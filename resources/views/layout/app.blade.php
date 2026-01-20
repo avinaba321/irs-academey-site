@@ -83,7 +83,7 @@
     </script>
     @endif --}}
 
-    @if ($errors->any() && (session('login_error') || session('role')))
+    {{-- @if ($errors->any() && (session('login_error') || session('role')))
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -99,9 +99,25 @@ document.addEventListener('DOMContentLoaded', function () {
     @endif
 
 });
+</script> --}}
+@if ($errors->any())
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Close any open modals first
+    document.querySelectorAll('.modal.show').forEach(m => {
+        bootstrap.Modal.getInstance(m)?.hide();
+    });
+
+    @if (session('login_error'))
+        new bootstrap.Modal(document.getElementById('loginPopup')).show();
+    @elseif (session('register_error'))
+        new bootstrap.Modal(document.getElementById('enrollPopup')).show();
+    @endif
+
+});
 </script>
 @endif
-
     <script>
         $(function() {
             $('#full_name').on('input', function() {

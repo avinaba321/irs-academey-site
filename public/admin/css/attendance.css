@@ -1,0 +1,153 @@
+body {
+    background: #f8fafc;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #eef2ff;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge-status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: capitalize;
+}
+
+.active {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.inactive {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.completed {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+@media (max-width: 1080px) {
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+}
+
+
+
+
+@media screen and (max-wdith:767px) {
+    .attendance-card .table-responsive .table {
+        overflow-x: scroll !important;
+    }
+}
+
+
+/* ================= ATTENDANCE TABLE ================= */
+
+.attendance-table {
+    min-width: 100%;
+    table-layout: fixed;
+    font-size: 14px;
+}
+
+/* COLUMN WIDTHS (DESKTOP BASE) */
+.col-id { width: 50px; }
+.col-student { width: 220px; }
+.col-batch { width: 160px; }
+.col-date { width: 120px; }
+.col-status { width: 120px; }
+.col-action { width: 180px; }
+
+/* STATUS BADGE */
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.status.active {
+    background: #e6f7ee;
+    color: #1a8754;
+}
+
+.status.inactive {
+    background: #fdecec;
+    color: #dc3545;
+}
+
+/* AVATAR */
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #0d6efd;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* ================= TABLET (≤991px) ================= */
+@media (max-width: 991px) {
+    .table{
+        overflow: scroll !important;
+    }
+    .attendance-card{
+        overflow-x: visible !important;
+    }
+    .col-id,
+    .col-date {
+        display: none !important;
+    }
+
+    .attendance-table {
+        font-size: 13px;
+    }
+
+    .col-action {
+        width: 160px;
+    }
+}
+
+/* ================= MOBILE (≤576px) ================= */
+@media (max-width: 576px) {
+    .col-batch,
+    .col-date {
+        display: none !important;
+    }
+
+    .attendance-table {
+        font-size: 12px;
+    }
+
+    .avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
+    }
+
+    .col-action {
+        width: 150px;
+    }
+
+    .col-action button {
+        padding: 2px 6px;
+        font-size: 11px;
+    }
+}

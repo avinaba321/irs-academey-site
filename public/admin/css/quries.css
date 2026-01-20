@@ -1,0 +1,88 @@
+body {
+    background: #f8fafc;
+}
+
+.page-head h5 {
+    font-weight: 600;
+}
+
+.page-head p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.new {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.follow {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.closed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* =================== modal popup from ====================== */
+
+.badge-status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-new {
+    background: #e0edff;
+    color: #2563eb;
+}
+
+.badge-follow {
+    background: #fff3cd;
+    color: #b45309;
+}
+
+.badge-closed {
+    background: #e7f5ec;
+    color: #15803d;
+}
+
+
+
+/* =================================== quries details page css ======================= */
+
+.detail-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+}
+
+.label {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.value {
+    font-weight: 600;
+}
+
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status.follow {
+    background: #fff3cd;
+    color: #b45309;
+}

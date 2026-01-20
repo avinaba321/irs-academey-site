@@ -61,7 +61,7 @@ class LoginController extends Controller
     $student = Student::where('email', $email)->where('role', 2)->first();
     if ($student && Hash::check($password, $student->password)) {
         Auth::guard('student')->login($student);
-        return redirect()->route('student.dashboard');
+        return redirect()->route('all-courses');
     }
 
         // ❌ Failed
@@ -70,11 +70,14 @@ class LoginController extends Controller
             ->with('login_error', true);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
         Auth::guard('teacher')->logout();
         Auth::guard('student')->logout();
+
+          $request->session()->invalidate();
+          $request->session()->regenerateToken();
 
         return redirect()->route('home');
     }

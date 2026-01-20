@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+         $middleware->alias([
+            'admin.ids' => \App\Http\Middleware\AdminOnlyIds::class,
+            'guard.access' => \App\Http\Middleware\GuardDashboardAccess::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

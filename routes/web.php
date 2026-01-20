@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminDashboradController;
+use App\Http\Controllers\Student\MyProfileDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\StudentDashboradController;
+use App\Http\Controllers\Student\StudentDashboradController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -66,10 +67,10 @@ Route::get('/demo', function () {
 Route::post('/register', [RegisterController::class, 'register'])
      ->name('register');
 
-Route::middleware('auth:admin')->group(function () {
-    Route::get('/admin/dashboard', fn () => view('admin.dashboard'))
-        ->name('admin.dashboard');
-});
+// Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(function () {
+//     Route::get('/admin/dashboard', fn () => view('Admin.dashboard'))
+//         ->name('admin.dashboard');
+// });
 
 Route::middleware('auth:teacher')->group(function () {
     Route::get('/teacher/dashboard', fn () => view('teacher.dashboard'))
@@ -77,7 +78,12 @@ Route::middleware('auth:teacher')->group(function () {
 });
 
 
-Route::get('/login', [LoginController::class,'login'])->name('login.show');
+// Route::get('/login', [LoginController::class,'login'])->name('login');
+Route::get('/login-redirect', function () {
+    return redirect()->route('home')->with('show_login_modal', true);
+})->name('login');
+
+Route::post('/logout', [LoginController::class,'logout'])->name('logout.user');
 Route::post('/login-submit', [LoginController::class,'login'])->name('login.submit');
 
 
@@ -136,13 +142,13 @@ Route::post('/login-submit', [LoginController::class,'login'])->name('login.subm
 // })->name('all-courses-details');
 
 
-Route::middleware('auth:student')->group(function () {
+Route::middleware(['auth:student','guard.access:student'])->group(function () {
 
     Route::get('/student/dashboard',
         [StudentDashboradController::class,'index']
     )->name('student.dashboard');
 
-    Route::get('/student/my_profile', fn () => view('Student.my_profile'))->name('my-profile');
+    Route::get('/student/my_profile', [MyProfileDetailsController::class,'profileIndex'])->name('my-profile');
     Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
     Route::get('/student/my_courses', fn () => view('Student.my_coures'))->name('my-courses');
     Route::get('/student/course_material', fn () => view('Student.courses_material'))->name('course-material');
@@ -152,4 +158,12 @@ Route::middleware('auth:student')->group(function () {
     Route::get('/student/certificate', fn () => view('Student.certificate'))->name('certificate');
     Route::get('/student/settings', fn () => view('Student.settings'))->name('settings');
 
+});
+
+
+// =================== Admin dashboade routes ==========================================
+
+Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(function () {
+    Route::get('/admin/dashboard', fn () => view('Admin.admin_dashboard'))
+        ->name('admin.dashboard');
 });

@@ -20,6 +20,7 @@ class RegisterController extends Controller
 {
     public function register(Request $request)
     {
+        session()->flash('register_error', true);
         // ✅ Validation Rules
         $request->validate([
             'name' => [
@@ -56,7 +57,18 @@ class RegisterController extends Controller
             'terms' => 'accepted',
         ]);
 
-        // ✅ Prepare Common Data
+
+        $emailExists =
+        Admin::where('email', $request->reg_email)->exists() ||
+        Teacher::where('email', $request->reg_email)->exists() ||
+        Student::where('email', $request->reg_email)->exists();
+
+        if ($emailExists) {
+            return back()
+                ->withErrors(['reg_email' => 'This email is already taken'])
+                ->withInput();
+        }
+
         $data = [
             'full_name'    => $request->name,
             'email'        => $request->reg_email,
@@ -75,31 +87,10 @@ class RegisterController extends Controller
             'gender'       => $request->gender,
             'address'      => $request->address,
             'profile_image' => $request->profile_image,
-            'last_qualification' => $request->last_qualification
+            'guardian_name' => $request->guardian_name,
+            'guardian_mobile' => $request->guardian_mobile
         ];
 
-
-        // // ✅ Store Based on Role
-        // switch ($request->role) {
-
-        //     // ADMIN
-        //     case 0:
-        //         Admin::create($data);
-        //         break;
-
-        //     // TEACHER
-        //     case 1:
-        //         Teacher::create($data);
-        //         break;
-
-        //     // STUDENT
-        //     case 2:
-        //         Student::create($data);
-        //         break;
-
-        //     default:
-        //         return back()->withErrors(['role' => 'Invalid role selected']);
-        // }
         // ✅ Store Based on Role
             if ($request->role == 0) {
                 // ADMIN

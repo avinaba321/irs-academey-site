@@ -1,24 +1,76 @@
-<head>
-    <meta charset="utf-8">
-    <title>Admin Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- NAVBAR -->
+    <header class="navbar-custom d-flex align-items-center justify-content-between">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-light d-md-none bg-warning text-white fs-6" onclick="toggleSidebar()">
+                <i class="bi bi-list" id="toggleIcon"></i>
+            </button>
+            <h5 class="mb-0 fw-semibold">Dashboard</h5>
+        </div>
 
-    <!-- Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <div class="d-flex align-items-center gap-3">
+            <div class="position-relative d-none d-md-block">
+                <i class="bi bi-search search-icon"></i>
+                <input class="form-control search-input" style="width:240px" placeholder="Search...">
+            </div>
 
-    <!-- Libraries -->
-    <link href="{{ asset('admin/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
+            <!--==================== Bell Icon ==================-->
+            <div class="dropdown text-end">
+                <div class="notification-bell" data-bs-toggle="dropdown">
+                    <i class="bi bi-bell fs-4"></i>
+                    <span class="notify-dot"></span>
+                </div>
 
-    <!-- Bootstrap -->
-    <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
+                <!-- Dropdown notification -->
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-notify">
 
-    <!-- Template CSS -->
-    <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
-</head>
+                    <div class="notify-header">
+                        Notifications
+                    </div>
+
+                    <div style="max-height: 280px; overflow-y: auto;">
+                        <div class="notify-item">
+                            <div class="notify-avatar">RK</div>
+                            <div>
+                                <div><strong>Rahul Kumar</strong> enrolled in Full Stack</div>
+                                <div class="notify-time">2 min ago</div>
+                            </div>
+                        </div>
+
+                        <div class="notify-item">
+                            <div class="notify-avatar">PS</div>
+                            <div>
+                                <div><strong>Priya Sharma</strong> made a payment</div>
+                                <div class="notify-time">1 hour ago</div>
+                            </div>
+                        </div>
+
+                        <div class="notify-item">
+                            <div class="notify-avatar">AS</div>
+                            <div>
+                                <div><strong>Amit Singh</strong> sent a message</div>
+                                <div class="notify-time">Yesterday</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="btn btn-light d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+                    <div class="avatar">AD</div>
+                    <span class="d-none d-md-inline">Admin</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a href="./admin-profile.html" class="dropdown-item text-success pointer">Profile</a></li>
+                    <li><a href="./settings/settings.html" class="dropdown-item">Settings</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </header>

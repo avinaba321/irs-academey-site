@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('admin.layouts.header')
+
+<head>
+    <meta charset="UTF-8">
+<title>@yield('title', 'Admin Dashboard')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+
+    <!-- custom css lihk -->
+    <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/css/dashboard.css') }}">
+    @stack('styles')
+</head>
 
 <body>
-<div class="container-xxl position-relative bg-white d-flex p-0">
 
-    <!-- Spinner -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
-    </div>
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-    {{-- Sidebar --}}
-    @include('admin.layouts.sidebar')
-
-    <!-- Content -->
-    <div class="content">
-
-        {{-- Navbar --}}
-        {{-- @include('admin.layouts.navbar') --}}
-
-        {{-- Page Content --}}
+    @include('Admin.layouts.sidebar')
+    
+    @include('Admin.layouts.header')
+      {{-- Main Content --}}
+    <main class="main-content">
         @yield('content')
-
-        {{-- Footer --}}
-        @include('admin.layouts.footer')
-
-    </div>
-</div>
+    </main>
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- main js link -->
+    <script src="{{ asset('admin/js/main.js') }}"></script>
+@stack('scripts')
 </body>
 </html>

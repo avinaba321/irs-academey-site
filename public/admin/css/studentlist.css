@@ -1,0 +1,196 @@
+body {
+    background: #f8fafc;
+}
+
+/* PAGE HEADER */
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.page-head h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.page-head p {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* CARD */
+.card-box {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+/* SEARCH */
+.search-box {
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* TABLE */
+.table th {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* AVATAR */
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #eef2ff;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* STATUS */
+.badge-status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.active {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.inactive {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.completed {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+/* PAGINATION */
+.pagination-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+
+.dropdown-item {
+    font-size: 14px;
+}
+
+body {
+    background: #f8fafc;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #eef2ff;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge-status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: capitalize;
+}
+
+.active {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.inactive {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.completed {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+
+/* ============================action area custom tooltips======================== */
+
+.action-icon {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* hover bg */
+.action-icon:hover {
+    background: rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+}
+
+/* tooltip text */
+.action-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s ease;
+}
+
+/* tooltip arrow */
+.action-icon::before {
+    content: "";
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #111;
+    opacity: 0;
+    transition: 0.25s ease;
+}
+
+/* show tooltip */
+.action-icon:hover::after,
+.action-icon:hover::before {
+    opacity: 1;
+}

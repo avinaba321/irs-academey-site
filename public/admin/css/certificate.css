@@ -1,0 +1,303 @@
+body {
+    background: #f3f4f6;
+    padding: 30px;
+}
+
+/* FORM */
+.form-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+}
+
+/* CERTIFICATE */
+.certificate {
+    position: relative;
+    max-width: 1000px;
+    margin: auto;
+    background: #fff;
+    border: 8px solid #d4af37;
+    padding: 60px !important;
+    font-family: Georgia, serif;
+}
+
+/* LOGO */
+.cert-logo {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cert-logo img {
+    height: 80px
+}
+
+/* WATERMARK */
+.certificate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('./../assets/img/logo.png') no-repeat center;
+    background-size: 300px;
+    opacity: .04;
+    pointer-events: none;
+}
+
+/* TITLE */
+.cert-title {
+    text-align: center;
+    margin-top: 80px
+}
+
+.cert-title h1 {
+    font-size: 44px;
+    letter-spacing: 2px
+}
+
+.cert-title h4 {
+    color: #d4af37
+}
+
+/* BODY */
+.cert-body {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 18px
+}
+
+.cert-name {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 20px 0
+}
+
+/* FOOTER */
+.cert-footer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    margin-top: 60px;
+}
+
+/* SIGN */
+.sign {
+    text-align: center
+}
+
+.sign img {
+    height: 60px
+}
+
+.sign p {
+    margin-top: 6px;
+    font-weight: 600
+}
+
+/* QR */
+.cert-id {
+    text-align: center;
+}
+
+#qrcode {
+    width: 80px;
+    height: 80px;
+    margin: auto;
+}
+
+#qrcode img {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+/* STATUS */
+@media print {
+    body {
+        background: #fff
+    }
+}
+
+
+/* ===============================certificate UI Css========================= */
+/* ===============================
+   MAIN CERTIFICATE CONTAINER
+================================ */
+.certificate {
+    position: relative;
+    background: url(./../img/certificate-background.png) center center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px solid #d4af37;
+    padding: 70px 80px;
+    min-height: 540px;
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ===============================
+   INNER GOLD BORDER
+================================ */
+.certificate::before {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    border: 2px solid #e6c15a;
+    z-index: 2;
+    pointer-events: none;
+}
+
+
+/* ===============================
+   KEEP CONTENT ABOVE SHAPES
+================================ */
+.certificate * {
+    position: relative;
+    z-index: 3;
+}
+
+/* ===============================
+   TITLE STYLES
+================================ */
+.cert-title h1 {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.cert-title h4 {
+    font-size: 18px;
+    color: #d4af37;
+    letter-spacing: 2px;
+}
+
+/* ===============================
+   STUDENT NAME
+================================ */
+.cert-name {
+    font-family: "Great Vibes", cursive;
+    font-size: 48px;
+    color: #0b2c4d;
+    margin: 16px 0;
+}
+
+.cert-name::after {
+    content: "";
+    display: block;
+    width: 60%;
+    height: 2px;
+    background: #d4af37;
+    margin: 8px auto 0;
+}
+
+/* ===============================
+   FOOTER / SIGNATURES
+================================ */
+.cert-footer {
+    position: absolute;
+    bottom: 45px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sign img {
+    height: 40px;
+    margin-bottom: 6px;
+}
+
+.sign p {
+    font-size: 13px;
+    border-top: 1px solid #444;
+    padding-top: 4px;
+    width: 120px;
+    margin: auto;
+}
+
+
+/* KEEP CONTENT ABOVE SHAPES */
+.certificate * {
+    position: relative;
+    z-index: 3;
+}
+
+/* LOGO */
+.cert-logo {
+    text-align: center;
+    margin-top: -40px;
+}
+
+.cert-logo img {
+    height: 42px;
+}
+
+/* TITLE */
+.cert-title h1 {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-top: -40px;
+}
+
+.cert-title h4 {
+    font-size: 18px;
+    color: #d4af37;
+    letter-spacing: 2px;
+}
+
+/* STUDENT NAME */
+.cert-name {
+    font-family: "Great Vibes", cursive;
+    font-size: 48px;
+    color: #0b2c4d;
+    /* margin: 14px 0; */
+}
+
+.cert-body p {
+    margin-top: -20px;
+}
+
+.cert-name::after {
+    content: "";
+    display: block;
+    width: 60%;
+    height: 2px;
+    background: #d4af37;
+    margin: 8px auto 0;
+}
+
+/* FOOTER */
+.cert-footer {
+    position: absolute;
+    bottom: 45px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sign img {
+    height: 40px;
+    margin-bottom: 6px;
+}
+
+.sign p {
+    font-size: 13px;
+    border-top: 1px solid #444;
+    padding-top: 4px;
+    width: 120px;
+    margin: auto;
+}
+
+
+/* MOBILE / TABLET */
+/* @media (max-width: 991px) {
+    #certificate {
+        width: 250mm !important;
+        height: 154mm !important;
+        overflow-x: auto !important;
+    }
+} */
+
