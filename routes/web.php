@@ -167,3 +167,5 @@ Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(functi
     Route::get('/admin/dashboard', fn () => view('Admin.admin_dashboard'))
         ->name('admin.dashboard');
 });
+
+Route::get('/admin/courses', fn () => view('Admin.courses'))->name('admin-courses');
