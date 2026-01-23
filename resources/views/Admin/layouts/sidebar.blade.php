@@ -41,6 +41,18 @@
         </nav>
 
         <div class="sidebar-footer">
-            <a class="sidebar-link"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a>
-        </div>
+        <a href="#"
+        class="sidebar-link"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Logout</span>
+        </a>
+
+        <form id="logout-form"
+            action="{{ route('logout.user') }}"
+            method="POST"
+            class="d-none">
+            @csrf
+        </form>
+    </div>
     </aside>

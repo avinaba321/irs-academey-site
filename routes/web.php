@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\AdminDashboradController;
 use App\Http\Controllers\Student\MyProfileDetailsController;
 use Illuminate\Support\Facades\Route;
@@ -164,8 +165,14 @@ Route::middleware(['auth:student','guard.access:student'])->group(function () {
 // =================== Admin dashboade routes ==========================================
 
 Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(function () {
-    Route::get('/admin/dashboard', fn () => view('Admin.admin_dashboard'))
+    Route::get('/admin/dashboard', [AdminDashboradController::class,'index'])
         ->name('admin.dashboard');
+
+    Route::get('/admin/courses', [AdminCourseController::class,'coursesIndex'])->name('admin-courses');
+
+    Route::post('/admin/courses/store', [AdminCourseController::class, 'store'])
+        ->name('admin.courses.store');
+    
 });
 
-Route::get('/admin/courses', fn () => view('Admin.courses'))->name('admin-courses');
+// Route::get('/admin/courses', fn () => view('Admin.courses'))->name('admin-courses');
