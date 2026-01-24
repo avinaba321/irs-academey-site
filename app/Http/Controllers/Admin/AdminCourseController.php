@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AdminCourse;
+use Illuminate\Support\Facades\Storage;
 
 
 class AdminCourseController extends Controller
@@ -51,5 +52,19 @@ class AdminCourseController extends Controller
         'message' => 'Course added successfully'
     ]);
     }
+
+    public function destroy(AdminCourse $course)
+{
+    // Delete course image if exists
+    if ($course->course_image && Storage::disk('public')->exists($course->course_image)) {
+        Storage::disk('public')->delete($course->course_image);
+    }
+
+    $course->delete();
+
+    return response()->json([
+        'message' => 'Course deleted successfully'
+    ]);
+}
     
 }

@@ -64,8 +64,12 @@
                                         <a href="#" class="dropdown-item" onclick="openEditCourse(event)">Edit</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="dropdown-item text-danger">Delete</a>
-                                    </li>
+                                        <a href="#"
+                                           class="dropdown-item text-danger"
+                                           onclick="openDeleteModal({{ $course->id }})">
+                                            Delete
+                                        </a>
+                                    </li>                                    
                                 </ul>
                             </div>
                         </div>
@@ -385,4 +389,45 @@
             preview.src = "";
         });
     </script>
+
+<script>
+    let deleteCourseId = null;
+
+    function openDeleteModal(courseId) {
+        deleteCourseId = courseId;
+
+        const modalEl = document.getElementById('deleteCourseModal');
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+        if (!confirmBtn) return;
+
+        confirmBtn.addEventListener('click', function () {
+            if (!deleteCourseId) return;
+
+            fetch(`/admin/courses/${deleteCourseId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                bootstrap.Modal.getInstance(
+                    document.getElementById('deleteCourseModal')
+                ).hide();
+
+                location.reload();
+            })
+            .catch(() => {
+                alert('Failed to delete course');
+            });
+        });
+    });
+</script>
 @endpush

@@ -88,7 +88,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('courses*') ? 'active' : '' }}"
+                    <a class="nav-link {{ request()->routeIs('courses') ? 'active' : '' }}"
                     href="{{ route('courses') }}">Courses</a>
                 </li>
 

@@ -21,7 +21,7 @@ class AdminOnlyIds
             abort(403, 'Unauthorized Access');
         }
 
-        $allowedIds = [2];
+        $allowedIds = [1,2];
 
         $admin = Auth::guard('admin')->user();
 

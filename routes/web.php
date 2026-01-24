@@ -23,7 +23,7 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/courses', function () {
-    return view('Courses.courses');
+    return view('Courses.home_courses');
 })->name('courses');
 
 Route::get('/placement', function () {
@@ -172,6 +172,11 @@ Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(functi
 
     Route::post('/admin/courses/store', [AdminCourseController::class, 'store'])
         ->name('admin.courses.store');
+
+        Route::delete('/admin/courses/{course}', 
+        [AdminCourseController::class, 'destroy']
+    )->name('admin.courses.destroy');
+    
     
 });
 
