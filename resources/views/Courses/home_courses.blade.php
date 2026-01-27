@@ -1,22 +1,29 @@
 @extends('layout.app')
 
 @section('title', 'Courses | IrsDesign Academy')
- <!-- Bootstrap 5 -->
-    <!-- font awesome link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap 5 -->
+<!-- font awesome link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- swiper css link -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+<!-- swiper css link -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 
- <link rel="stylesheet" href="{{ asset('assets/css/courses.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/courses.css') }}">
+<style>
+    .course-card img {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+</style>
 @section('content')
 
-<!-- about us breadcum -->
+    <!-- about us breadcum -->
     <section class="about-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -41,8 +48,7 @@
                 class="filterarea d-flex flex-wrap justify-content-lg-center justify-content-xl-between justify-content-sm-center align-items-center gap-3 mb-4">
                 <h2 class="section-title text-lg-start text-sm-center  text-md-center">Featured Courses</h2>
 
-                <div
-                    class="d-flex gap-2 justify-content-lg-between justify-content-sm-center justify-content-md-center ">
+                <div class="d-flex gap-2 justify-content-lg-between justify-content-sm-center justify-content-md-center ">
 
                     <!-- Search -->
                     <div class="input-group border border-warning rounded" id="searchinput">
@@ -71,9 +77,9 @@
                 </div>
             </div>
 
-           
+
             <!-- Courses -->
-            <div class="row col-12 g-4 mt-4 coursecard-area justify-content-center"> 
+            {{-- <div class="row col-12 g-4 mt-4 coursecard-area justify-content-center"> 
                 <!-- Card 1 -->
                 <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="799" data-duration="6">
                     <div class="course-card p-2"> <img src="{{ asset('assets/img/courses/course1.jpg') }}" class="img-fluid rounded">
@@ -84,97 +90,63 @@
                     </div>
                 </div> 
                 
-                <!-- Card 2 -->
-                <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="499" data-duration="4">
-                    <div class="course-card p-2"> <img src="{{ asset('assets/img/courses/course2.jpg') }}" class="img-fluid rounded">
-                        <div class="p-4"> <span class="badge bg-warning">Electronics</span>
-                            <h5 class="course-title mt-2">Electronics Fundamentals</h5>
-                            <p class="text-muted">4 months</p> <span class="fw-bold">$499</span>
-                        </div> <button class="enroll view-btn">Enroll<i class="fa-solid fa-angles-right"></i></button>
+            </div> --}}
+
+            <div class="row col-12 g-4 mt-4 coursecard-area justify-content-center">
+
+                @forelse ($courses as $course)
+                    <div class="col-lg-4 col-md-6 course-item mx-auto">
+                        <div class="course-card p-2 h-100 d-flex flex-column">
+
+                            <img src="{{ asset('storage/' . $course->course_image) }}" class="img-fluid rounded"
+                                alt="{{ $course->title }}">
+
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+
+                                <span class="badge bg-primary mb-2">Course</span>
+
+                                <h5 class="course-title mt-2">
+                                    {{ $course->title }}
+                                </h5>
+
+                                <p class="text-muted mb-2">
+                                    {{ $course->description }}
+                                </p>
+
+                                <p class="text-muted small mb-2">
+                                    Duration:{{ $course->duration }}
+                                </p>
+
+                                <div class="mb-3">
+                                    @if ($course->discount_price)
+                                        <span class="fw-bold fs-5">₹{{ number_format($course->discount_price) }}</span><br>
+                                        <span class="text-muted text-decoration-line-through">
+                                            ₹{{ number_format($course->price) }}
+                                        </span>
+                                    @else
+                                        <span class="fw-bold fs-5">₹{{ number_format($course->price) }}</span>
+                                    @endif
+                                </div>
+
+                                <!-- BUTTON STICKS TO BOTTOM -->
+                                <button class="enroll view-btn mt-auto"  data-bs-toggle="modal"
+                    data-bs-target="#loginPopup">
+                                    Enroll <i class="fa-solid fa-angles-right"></i>
+                                </button>
+
+                            </div>
+                        </div>
+
                     </div>
-                </div> 
-                
-                <!-- Card 3 -->
-                <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="499" data-duration="3">
-                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&q=40"
-                            class="img-fluid rounded">
-                        <div class="p-4"> <span class="badge bg-success">Copywriting</span>
-                            <h5 class="course-title mt-2">Copywriting Psychology</h5>
-                            <p class="text-muted">3 months</p> <span class="fw-bold">$499</span>
-                        </div> <button class="enroll view-btn">Enroll<i class="fa-solid fa-angles-right"></i></button>
+
+                @empty
+                    <div class="text-center text-muted mt-5">
+                        <h5>No courses available right now</h5>
                     </div>
-                </div> 
-                
-                <!-- Card 4 -->
-                <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="599" data-duration="5">
-                    <div class="course-card p-2"> <img
-                            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&q=40"
-                            class="img-fluid rounded">
-                        <div class="p-4"> <span class="badge bg-info">Design</span>
-                            <h5 class="course-title mt-2">UI/UX Design Masterclass</h5>
-                            <p class="text-muted">5 months</p> <span class="fw-bold">$599</span>
-                        </div> <button class="enroll view-btn">Enroll<i class="fa-solid fa-angles-right"></i></button>
-                    </div>
-                </div> 
-                
-                <!-- Card 5 -->
-                <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="699" data-duration="4">
-                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&q=40"
-                            class="img-fluid rounded">
-                        <div class="p-4"> <span class="badge bg-danger">Marketing</span>
-                            <h5 class="course-title mt-2">Digital Marketing</h5>
-                            <p class="text-muted">4 months</p> <span class="fw-bold">$699</span>
-                        </div> <button class="enroll view-btn">Enroll<i class="fa-solid fa-angles-right"></i></button>
-                    </div>
-                </div> 
-                
-                <!-- Card 6 -->
-                <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="899" data-duration="7">
-                    <div class="course-card p-2"> <img
-                            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=40"
-                            class="img-fluid rounded">
-                        <div class="p-4"> <span class="badge bg-dark">Programming</span>
-                            <h5 class="course-title mt-2">Full Stack Web Development</h5>
-                            <p class="text-muted">7 months</p> <span class="fw-bold">$899</span>
-                        </div> <button class="enroll view-btn">Enroll<i class="fa-solid fa-angles-right"></i></button>
-                    </div>
-                </div> 
-                
-                <!-- Card 7 -->
-                <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="599" data-duration="5">
-                    <div class="course-card p-2"> <img
-                            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&q=40"
-                            class="img-fluid rounded">
-                        <div class="p-4"> <span class="badge bg-info">Design</span>
-                            <h5 class="course-title mt-2">UI/UX Design Masterclass</h5>
-                            <p class="text-muted">5 months</p> <span class="fw-bold">$599</span>
-                        </div> <button class="enroll view-btn">Enroll<i class="fa-solid fa-angles-right"></i></button>
-                    </div>
-                </div> 
-                
-                <!-- Card 8 -->
-                <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="699" data-duration="4">
-                    <div class="course-card p-2"> <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&q=40"
-                            class="img-fluid rounded">
-                        <div class="p-4"> <span class="badge bg-danger">Marketing</span>
-                            <h5 class="course-title mt-2">Digital Marketing</h5>
-                            <p class="text-muted">4 months</p> <span class="fw-bold">$699</span>
-                        </div> <button class="enroll view-btn">Enroll<i class="fa-solid fa-angles-right"></i></button>
-                    </div>
-                </div> 
-                
-                <!-- Card 9 -->
-                <div class="col-lg-4 col-md-6 course-item mx-auto" data-price="899" data-duration="7">
-                    <div class="course-card p-2"> <img
-                            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&q=40"
-                            class="img-fluid rounded">
-                        <div class="p-4"> <span class="badge bg-dark">Programming</span>
-                            <h5 class="course-title mt-2">Full Stack Web Development</h5>
-                            <p class="text-muted">7 months</p> <span class="fw-bold">$899</span>
-                        </div> <button class="enroll view-btn">Enroll<i class="fa-solid fa-angles-right"></i></button>
-                    </div>
-                </div>
+                @endforelse
+
             </div>
+
 
         </div>
     </section>
@@ -247,7 +219,7 @@
         </div>
     </section>
 
-      <script>
+    <script>
         const searchInput = document.getElementById("courseSearch");
         const priceFilter = document.getElementById("priceFilter");
         const durationFilter = document.getElementById("durationFilter");

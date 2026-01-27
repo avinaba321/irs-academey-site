@@ -25,7 +25,6 @@ class AdminCourseController extends Controller
             'duration'       => 'required|string|max:100',
             'price'          => 'required|numeric|min:0',
             'discount_price' => 'required|numeric|min:0|lt:price',
-            'status'         => 'required|in:0,1',
             'course_image'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
@@ -44,7 +43,7 @@ class AdminCourseController extends Controller
             'duration'       => $request->duration,
             'price'          => $request->price,
             'discount_price' => $request->discount_price,
-            'status'         => $request->status,
+            'status'         => 1,
         ]);
 
         return response()->json([
@@ -66,5 +65,35 @@ class AdminCourseController extends Controller
         'message' => 'Course deleted successfully'
     ]);
 }
+
+public function toggleStatus(AdminCourse $course)
+{
+    // Toggle status: 1 → 0 OR 0 → 1
+    // $newStatus = $course->status == 1 ? 0 : 1;
+
+    // $course->update([
+    //     'status' => $newStatus
+    // ]);
+
+    // return response()->json([
+    //     'success' => true,
+    //     'status'  => $newStatus,
+    //     'message' => $newStatus
+    //         ? 'Course activated successfully'
+    //         : 'Course deactivated successfully'
+    // ]);
+
+    $course->status = $course->status == 1 ? 0 : 1;
+    $course->save();
+
+    return response()->json([
+        'success' => true,
+        'status'  => $course->status,
+        'message' => $course->status
+            ? 'Course activated'
+            : 'Course deactivated'
+    ]);
+}
+
     
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\AdminDashboradController;
+use App\Http\Controllers\AllCourseController;
 use App\Http\Controllers\Student\MyProfileDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
@@ -22,9 +23,7 @@ Route::get('/about', function () {
     return view('About.about');
 })->name('about');
 
-Route::get('/courses', function () {
-    return view('Courses.home_courses');
-})->name('courses');
+Route::get('/view-all-courses', [AllCourseController::class,'index'])->name('courses');
 
 Route::get('/placement', function () {
     return view('Placement.placement');
@@ -176,6 +175,12 @@ Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(functi
         Route::delete('/admin/courses/{course}', 
         [AdminCourseController::class, 'destroy']
     )->name('admin.courses.destroy');
+
+    Route::patch(
+    '/admin/courses/{course}/status',
+    [AdminCourseController::class, 'toggleStatus']
+)->name('admin.courses.status');
+
     
     
 });
