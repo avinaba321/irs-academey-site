@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Student\AllStudentCourseController;
 use App\Http\Controllers\Student\StudentDashboradController;
 
 // Route::get('/', function () {
@@ -149,7 +150,10 @@ Route::middleware(['auth:student','guard.access:student'])->group(function () {
     )->name('student.dashboard');
 
     Route::get('/student/my_profile', [MyProfileDetailsController::class,'profileIndex'])->name('my-profile');
-    Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
+    // Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
+
+    Route::get('/student/all_courses', [AllStudentCourseController::class, 'index'])->name('all-courses');
+
     Route::get('/student/my_courses', fn () => view('Student.my_coures'))->name('my-courses');
     Route::get('/student/course_material', fn () => view('Student.courses_material'))->name('course-material');
     Route::get('/student/batches', fn () => view('Student.batches'))->name('batches');

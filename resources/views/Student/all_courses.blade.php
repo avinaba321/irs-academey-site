@@ -1,12 +1,12 @@
 @extends('Student.layouts.app')
 @section('title', 'My Profile | IrsDesign Academy')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('student/css/allCourses.css') }}">
+    <link rel="stylesheet" href="{{ asset('student/css/allCourses.css') }}">
 @endpush
 
 @section('content')
 
-   <div class="wrap">
+    {{-- <div class="wrap">
 
             <!-- Header -->
             <div class="page-title">
@@ -94,9 +94,96 @@
                 </button>
             </div>
 
+    </div> --}}
+
+    <div class="wrap">
+
+        <!-- Header -->
+        <div class="page-title">
+            <h3>All Courses</h3>
+        </div>
+
+        <!-- All Courses Cards -->
+        <div class="row g-3">
+
+            @forelse($courses as $course)
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <img src="{{ $course->course_image
+                            ? asset('storage/' . $course->course_image)
+                            : asset('assets/img/courses/default-course.jpg') }}"
+                            class="img-fluid rounded" style="height:200px; width:100%; object-fit:cover;"
+                            alt="{{ $course->title }}">
+
+                        <div class="course-top mt-3">
+                            <div>
+                                <h5 class="course-name">
+                                    {{ $course->title }}
+                                </h5>
+
+                                <div class="course-meta">
+                                    <i class="bi bi-stars me-1"></i>
+                                    Premium Course • Mentorship
+                                </div>
+                            </div>
+
+                           <div class="price">
+    @if ($course->discount_price && $course->discount_price < $course->price)
+        <span class="fw-bold text-success">
+            ₹{{ number_format($course->discount_price) }}
+        </span>
+        <br>
+        <span class="text-muted text-decoration-line-through small">
+            ₹{{ number_format($course->price) }}
+        </span>
+    @else
+        <span class="fw-bold">
+            ₹{{ number_format($course->price) }}
+        </span>
+    @endif
+</div>
+
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <p class="course-desc">
+                            {{ $course->description }}
+                        </p>
+
+                        <div class="course-actions">
+                            <a href="#" class="btn-soft text-center text-decoration-none">
+                                <i class="bi bi-eye-fill"></i> Details
+                            </a>
+
+                            <button class="btn-primary-premium purchaseBtn" data-course="{{ $course->title }}"
+                                data-price="{{ $course->discount_price ?? $course->price }}">
+                                <i class="bi bi-bag-plus-fill"></i>
+                                Purchase
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            @empty
+                <div class="col-12 text-center text-muted py-5">
+                    <h5>No courses available right now</h5>
+                </div>
+            @endforelse
+
+        </div>
+
+        <!-- Load More Button (optional later) -->
+        <div class="top-actions my-4 text-center">
+            <button class="btn-addmore">
+                <i class="bi bi-arrow-clockwise"></i> Load More Courses
+            </button>
+        </div>
+
     </div>
 
-     <!-- STUDENT DETAILS MODAL -->
+
+    <!-- STUDENT DETAILS MODAL -->
     <div class="payModal" id="payModal">
         <div class="payOverlay" id="payOverlay"></div>
 
@@ -174,8 +261,7 @@
 
 @endsection
 @push('scripts')
-
-  <script>
+    <script>
         const payModal = document.getElementById("payModal");
         const payOverlay = document.getElementById("payOverlay");
         const closePay = document.getElementById("closePay");
@@ -213,5 +299,4 @@
             if (e.key === "Escape") closeModal();
         });
     </script>
-    
 @endpush

@@ -16,10 +16,139 @@
 <link rel="stylesheet" href="{{ asset('assets/css/courses.css') }}">
 <style>
     .course-card img {
-    height: 200px;
-    object-fit: cover;
-    width: 100%;
-}
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    /* COURSE CARD */
+    .course-card {
+        border-radius: 16px;
+        transition: all 0.35s ease;
+        cursor: pointer;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    /* Hover lift */
+    .course-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Image zoom */
+    .course-card img {
+        transition: transform 0.5s ease;
+    }
+
+    .course-card:hover img {
+        transform: scale(1.06);
+    }
+
+    /* Title hover */
+    .course-card:hover .course-title {
+        color: #0d6efd;
+    }
+
+    /* Badge animation */
+    .course-card .badge {
+        transition: all 0.3s ease;
+    }
+
+    .course-card:hover .badge {
+        transform: scale(1.05);
+    }
+
+    /* Enroll button animation */
+    .enroll {
+        transition: all 0.3s ease;
+    }
+
+    .course-card:hover .enroll {
+        background: linear-gradient(135deg, #ffcc00, #ffdd44);
+        transform: translateY(-2px);
+    }
+
+    .course-title {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 6px;
+    }
+
+    .course-desc {
+        font-size: 0.9rem;
+        color: #6c757d;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+
+    .course-meta {
+        margin-bottom: 10px;
+    }
+
+    .course-meta .duration {
+        font-size: 0.85rem;
+        color: #555;
+        background: #f1f3f5;
+        padding: 4px 10px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .course-price {
+        margin-top: 8px;
+    }
+
+    .current-price {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #000;
+    }
+
+    .old-price {
+        font-size: 0.9rem;
+        color: #999;
+        text-decoration: line-through;
+        margin-left: 6px;
+    }
+
+    .enroll-btn {
+        width: 100%;
+        padding: 14px 18px;
+        border-radius: 999px;
+        border: none;
+
+        background: linear-gradient(135deg, #ffd600, #ffcc00);
+        color: #000;
+
+        font-size: 1rem;
+        font-weight: 600;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        margin-top: 16px;
+        box-shadow: 0 10px 20px rgba(255, 204, 0, 0.35);
+
+        transition: all 0.25s ease;
+    }
+
+    .enroll-btn i {
+        font-size: 0.9rem;
+    }
+
+    .enroll-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(255, 204, 0, 0.45);
+    }
+
+    .enroll-btn:active {
+        transform: translateY(0);
+    }
 </style>
 @section('content')
 
@@ -109,15 +238,21 @@
                                     {{ $course->title }}
                                 </h5>
 
-                                <p class="text-muted mb-2">
+                                <p class="course-desc mb-2">
                                     {{ $course->description }}
                                 </p>
 
-                                <p class="text-muted small mb-2">
-                                    Duration:{{ $course->duration }}
-                                </p>
+                                {{-- <p class="text-muted small mb-2">
+                                    <b>⏱ Duration:</b> {{ $course->duration }} Months
+                                </p> --}}
 
-                                <div class="mb-3">
+                                <div class="course-meta">
+                                    <span class="duration">
+                                        <i class="fa-regular fa-clock"></i> {{ $course->duration }} Months
+                                    </span>
+                                </div>
+
+                                {{-- <div class="mb-3">
                                     @if ($course->discount_price)
                                         <span class="fw-bold fs-5">₹{{ number_format($course->discount_price) }}</span><br>
                                         <span class="text-muted text-decoration-line-through">
@@ -126,13 +261,16 @@
                                     @else
                                         <span class="fw-bold fs-5">₹{{ number_format($course->price) }}</span>
                                     @endif
-                                </div>
+                                </div> --}}
 
-                                <!-- BUTTON STICKS TO BOTTOM -->
-                                <button class="enroll view-btn mt-auto"  data-bs-toggle="modal"
-                    data-bs-target="#loginPopup">
+                                <div class="course-price">
+                                    <span class="current-price">₹{{ number_format($course->discount_price) }}</span>
+                                    <span class="old-price"> ₹{{ number_format($course->price) }}</span>
+                                </div>
+                                <button class="enroll-btn mt-2" data-bs-toggle="modal" data-bs-target="#loginPopup">
                                     Enroll <i class="fa-solid fa-angles-right"></i>
                                 </button>
+
 
                             </div>
                         </div>
