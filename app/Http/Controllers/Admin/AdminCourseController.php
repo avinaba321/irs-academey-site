@@ -95,5 +95,41 @@ public function toggleStatus(AdminCourse $course)
     ]);
 }
 
+public function update(Request $request, AdminCourse $course)
+{
+    $request->validate([
+        'title'          => 'required|string|max:255',
+        'description'    => 'required|string|max:500',
+        'duration'       => 'required|string|max:100',
+        'price'          => 'required|numeric|min:0',
+        'discount_price' => 'nullable|numeric|min:0|lt:price',
+        'course_image'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
+
+    // Handle image
+    if ($request->hasFile('course_image')) {
+        if ($course->course_image && Storage::disk('public')->exists($course->course_image)) {
+            Storage::disk('public')->delete($course->course_image);
+        }
+
+        $course->course_image = $request->file('course_image')
+            ->store('courses', 'public');
+    }
+
+    $course->update([
+        'title'          => $request->title,
+        'description'    => $request->description,
+        'duration'       => $request->duration,
+        'price'          => $request->price,
+        'discount_price' => $request->discount_price,
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Course updated successfully'
+    ]);
+}
+
+
     
 }

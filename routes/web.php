@@ -181,6 +181,8 @@ Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(functi
     [AdminCourseController::class, 'toggleStatus']
 )->name('admin.courses.status');
 
+Route::put('/admin/courses/{course}', [AdminCourseController::class, 'update'])
+    ->name('admin.courses.update');
     
     
 });

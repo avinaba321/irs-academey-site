@@ -58,11 +58,13 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a href="#" class="dropdown-item text-success">View</a>
+                                        <a href="#"
+                                        class="dropdown-item"
+                                        onclick='openEditCourse(@json($course))'>
+                                            Edit
+                                        </a>
                                     </li>
-                                    <li>
-                                        <a href="#" class="dropdown-item" onclick="openEditCourse(event)">Edit</a>
-                                    </li>
+
                                     <li>
                                         <a href="#" class="dropdown-item text-danger"
                                             onclick="openDeleteModal({{ $course->id }})">
@@ -260,6 +262,81 @@
             </div>
         </div>
     </div>
+
+
+    <!-- EDIT COURSE MODAL -->
+<div class="modal fade" id="editCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <form id="editCourseForm" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Course</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div id="editCourseAlert" class="alert d-none mx-3 mt-3"></div>
+
+                <div class="modal-body">
+
+                    <!-- BASIC INFO -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Course Name</label>
+                            <input type="text" class="form-control" id="editTitle" name="title">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-control" id="editDescription" name="description">
+                        </div>
+                    </div>
+
+                    <!-- DETAILS -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label class="form-label">Duration</label>
+                            <input type="text" class="form-control" id="editDuration" name="duration">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Course Image</label>
+                            <input type="file" class="form-control" name="course_image"
+                                   onchange="previewEditImage(event)">
+                            <img id="editImagePreview"
+                                 class="img-fluid rounded mt-2 d-none"
+                                 style="max-height:120px;">
+                        </div>
+                    </div>
+
+                    <!-- PRICING -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Price</label>
+                            <input type="number" class="form-control" id="editPrice" name="price">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Discount Price</label>
+                            <input type="number" class="form-control" id="editDiscount" name="discount_price">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Course</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 
     <!-- STATUS CHANGE MODAL -->
 <div class="modal fade" id="statusModal" tabindex="-1">
@@ -514,4 +591,70 @@
     });
 </script>
 
+<script>
+    let editCourseId = null;
+
+    function openEditCourse(course) {
+        editCourseId = course.id;
+
+        document.getElementById('editTitle').value = course.title;
+        document.getElementById('editDescription').value = course.description;
+        document.getElementById('editDuration').value = course.duration;
+        document.getElementById('editPrice').value = course.price;
+        document.getElementById('editDiscount').value = course.discount_price ?? '';
+
+        const preview = document.getElementById('editImagePreview');
+        if (course.course_image) {
+            preview.src = `/storage/${course.course_image}`;
+            preview.classList.remove('d-none');
+        } else {
+            preview.classList.add('d-none');
+        }
+
+        new bootstrap.Modal(document.getElementById('editCourseModal')).show();
+    }
+
+    function previewEditImage(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('editImagePreview');
+
+        if (!file) return;
+
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('d-none');
+    }
+</script>
+
+<script>
+    document.getElementById('editCourseForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const alertBox = document.getElementById('editCourseAlert');
+
+        fetch(`/admin/courses/${editCourseId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            alertBox.className = 'alert alert-success';
+            alertBox.innerText = data.message;
+            alertBox.classList.remove('d-none');
+
+            setTimeout(() => {
+                location.reload();
+            }, 1200);
+        })
+        .catch(() => {
+            alertBox.className = 'alert alert-danger';
+            alertBox.innerText = 'Update failed';
+            alertBox.classList.remove('d-none');
+        });
+    });
+</script>
 @endpush
