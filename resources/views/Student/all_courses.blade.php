@@ -2,6 +2,12 @@
 @section('title', 'My Profile | IrsDesign Academy')
 @push('styles')
     <link rel="stylesheet" href="{{ asset('student/css/allCourses.css') }}">
+    <style>
+        .price {
+            font-size: 1.1rem;
+            line-height: 1.3;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -127,21 +133,26 @@
                                 </div>
                             </div>
 
-                           <div class="price">
-    @if ($course->discount_price && $course->discount_price < $course->price)
-        <span class="fw-bold text-success">
-            ₹{{ number_format($course->discount_price) }}
-        </span>
-        <br>
-        <span class="text-muted text-decoration-line-through small">
-            ₹{{ number_format($course->price) }}
-        </span>
-    @else
-        <span class="fw-bold">
-            ₹{{ number_format($course->price) }}
-        </span>
-    @endif
-</div>
+                            <div class="price">
+                                @if ($course->discount_price && $course->discount_price < $course->price)
+                                    <span class="fw-bold text-success">
+                                        ₹{{ number_format($course->discount_price) }}
+                                    </span>
+                                    <br>
+                                    <span class="text-muted text-decoration-line-through small">
+                                        ₹{{ number_format($course->price) }}
+                                    </span>
+                                @else
+                                    <span class="fw-bold">
+                                        ₹{{ number_format($course->price) }}
+                                    </span>
+                                @endif
+                                @if ($course->discount_price)
+                                    <span class="badge bg-danger ms-2">
+                                        {{ round((1 - $course->discount_price / $course->price) * 100) }}% OFF
+                                    </span>
+                                @endif
+                            </div>
 
                         </div>
 
