@@ -150,6 +150,9 @@ Route::middleware(['auth:student','guard.access:student'])->group(function () {
     )->name('student.dashboard');
 
     Route::get('/student/my_profile', [MyProfileDetailsController::class,'profileIndex'])->name('my-profile');
+     Route::patch('/student/profile/update', 
+        [MyProfileDetailsController::class, 'update']
+    )->name('student.profile.update');
     // Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
 
     Route::get('/student/all_courses', [AllStudentCourseController::class, 'index'])->name('all-courses');

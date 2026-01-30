@@ -74,3 +74,17 @@
              </div>
          </div>
      </div>
+     <script>
+         document.addEventListener('DOMContentLoaded', () => {
+             const passwordInput = document.getElementById('password');
+
+             if (!passwordInput) return;
+
+             passwordInput.addEventListener('input', function() {
+                 if (this.value.length > 0) {
+                     this.value =
+                         this.value.charAt(0).toUpperCase() + this.value.slice(1);
+                 }
+             });
+         });
+     </script>
