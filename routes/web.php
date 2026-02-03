@@ -145,14 +145,13 @@ Route::post('/login-submit', [LoginController::class,'login'])->name('login.subm
 
 Route::middleware(['auth:student','guard.access:student'])->group(function () {
 
-    Route::get('/student/dashboard',
-        [StudentDashboradController::class,'index']
-    )->name('student.dashboard');
+    Route::get('/student/dashboard',[StudentDashboradController::class,'index'])->name('student.dashboard');
 
     Route::get('/student/my_profile', [MyProfileDetailsController::class,'profileIndex'])->name('my-profile');
-     Route::patch('/student/profile/update', 
-        [MyProfileDetailsController::class, 'update']
-    )->name('student.profile.update');
+     Route::patch('/student/profile/update', [MyProfileDetailsController::class, 'update'])->name('student.profile.update');
+    Route::post('/student/profile/avatar', [MyProfileDetailsController::class, 'updateAvatar'])->name('student.profile.avatar.update');
+     Route::patch('/student/change-password', [MyProfileDetailsController::class, 'updatePassword'])->name('student.password.update');
+
     // Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
 
     Route::get('/student/all_courses', [AllStudentCourseController::class, 'index'])->name('all-courses');

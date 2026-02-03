@@ -2,6 +2,66 @@
 @section('title', 'My Profile | IrsDesign Academy')
 @push('styles')
     <link rel="stylesheet" href="{{ asset('student/css/myProfile.css') }}">
+   <style>
+.invalid-feedback {
+    display: none;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.invalid-feedback.d-block {
+    display: block !important;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.parsley-errors-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0 0;
+    color: #dc3545;
+    font-size: 0.875rem;
+}
+
+.avatar-wrap {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: auto;
+}
+
+.avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+
+.avatar-edit-btn {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.avatar-edit-btn:hover {
+    background: #084298;
+}
+
+</style>
 @endpush
 
 @section('content')
@@ -18,9 +78,23 @@
                 <!--  LEFT SIDE PROFILE -->
                 <div class="col-lg-4 profile-side">
                     <div class="profile-card">
-                        <div class="avatar-wrap">
+                        {{-- <div class="avatar-wrap">
                             <img src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                                 alt="profile" />
+                        </div> --}}
+                        <div class="avatar-wrap position-relative">
+                            <img
+                                src="{{ $student->profile_image
+                                        ? asset('storage/'.$student->profile_image)
+                                        : asset('assets/img/demo-profile.jpg') }}"
+                                alt="profile"
+                                id="profileAvatar"
+                            />
+
+                            <!-- EDIT ICON -->
+                            <button class="avatar-edit-btn" id="editAvatarBtn">
+                                <i class="bi bi-camera-fill"></i>
+                            </button>
                         </div>
 
                         <div class="profile-name">{{ $student->full_name }}</div>
@@ -44,7 +118,7 @@
                                 <i class="bi bi-pencil-square me-2"></i> Edit Profile
                             </button>
 
-                            <button class="btn btn-soft w-100">
+                            <button class="btn btn-soft w-100" onclick="openPasswordModal()">
                                 <i class="bi bi-key me-2"></i> Change Password
                             </button>
                         </div>
@@ -56,7 +130,11 @@
 
                     <div class="side-title">
                         <h5><i class="bi bi-person-lines-fill me-2"></i> Student Details</h5>
-                        <span>Last updated: 10 Jan 2026</span>
+                        <span>
+                            Last updated:
+                            {{ $student->updated_at->format('d M Y') }}
+                        </span>
+
                     </div>
 
                     <div class="info-grid">
@@ -158,7 +236,10 @@
             <!-- Header -->
             <div class="editTop">
                 <h5 class="m-0 fw-black">
-                    <i class="bi bi-person-gear me-2"></i> Edit Profile
+                    
+                        <i class="bi bi-pencil-square me-1" id="editBtn"></i> Edit Profile
+                   </button>
+
                 </h5>
 
                 <button class="closeEdit" id="closeEdit">
@@ -166,115 +247,7 @@
                 </button>
             </div>
 
-            <!-- Body -->
-            {{-- <div class="editBody">
-                <div class="row g-3">
-
-                    <div class="col-md-6">
-                        <label class="form-label">Full Name</label>
-
-                        <input type="text" class="form-control premium-input @error('full_name') is-invalid @enderror"
-                            name="full_name" id="editName" value="{{ old('full_name', $student->full_name) }}" required
-                            data-parsley-required-message="Full name is required">
-
-                        <!-- AJAX error -->
-                        <div class="invalid-feedback"></div>
-
-                        <!-- Laravel fallback error -->
-                        @error('full_name')
-                            <div class="text-danger small mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control premium-input" name="email" id="editEmail"
-                            value="{{ $student->email }}" />
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Contact Number</label>
-                        <input type="text" class="form-control premium-input" name="phone_number" id="editPhone"
-                            value="{{ $student->phone_number }}" />
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control premium-input" name="dob" id="editDob"
-                            value="{{ $student->dob }}" />
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Gender</label>
-                        <select class="form-select premium-input" name="gender">
-                            <option value="">Select a Gender</option>
-                            <option value="male" {{ $student->gender == 'male' ? 'selected' : '' }}>MALE</option>
-                            <option value="female" {{ $student->gender == 'female' ? 'selected' : '' }}>FEMALE</option>
-                            <option value="other" {{ $student->gender == 'other' ? 'selected' : '' }}>OTHER</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Last Qualification</label>
-                        <select class="form-select premium-input" name="last_qualification">
-                            <option value="">Select Last Qualification</option>
-
-                            <option value="HS" {{ $student->last_qualification === 'HS' ? 'selected' : '' }}>
-                                HS
-                            </option>
-
-                            <option value="GRADUATE" {{ $student->last_qualification === 'GRADUATE' ? 'selected' : '' }}>
-                                Graduate
-                            </option>
-
-                            <option value="DIPLOMA" {{ $student->last_qualification === 'DIPLOMA' ? 'selected' : '' }}>
-                                Diploma
-                            </option>
-
-                            <option value="POST_GRADUATE"
-                                {{ $student->last_qualification === 'POST_GRADUATE' ? 'selected' : '' }}>
-                                Post Graduate
-                            </option>
-
-                            <option value="OTHER" {{ $student->last_qualification === 'OTHER' ? 'selected' : '' }}>
-                                Others
-                            </option>
-                        </select>
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <label class="form-label">Guardian Name</label>
-                        <input type="text" class="form-control premium-input" name="guardian_name" id="editGuardian"
-                            value="{{ $student->guardian_name }}" />
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Guardian Mobile</label>
-                        <input type="text" class="form-control premium-input" name="guardian_mobile"
-                            id="editGuardianPhone" value="{{ $student->guardian_mobile }}" />
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Address</label>
-                        <input type="text" class="form-control premium-input" name="address" id="editAddress"
-                            value="{{ $student->address }}" />
-                    </div>
-
-                </div>
-
-                <!-- Buttons -->
-                <div class="editActions mt-4">
-                    <button class="btnCancel" id="cancelEdit">
-                        <i class="bi bi-x-circle me-1"></i> Cancel
-                    </button>
-
-                    <button type="button" class="btnSave" id="saveEdit">
-                        <i class="bi bi-check-circle me-1"></i> Save Changes
-                    </button>
-                </div>
-            </div> --}}
-            <!-- Body -->
+            <!-- Edit Modal Body -->
             <div class="editBody">
                 <form id="profileEditForm" data-parsley-validate>
                     <div class="row g-3">
@@ -335,11 +308,11 @@
                             <select class="form-select premium-input @error('gender') is-invalid @enderror" name="gender"
                                 id="editGender">
                                 <option value="">Select a Gender</option>
-                                <option value="MALE" {{ old('gender', $student->gender) == 'MALE' ? 'selected' : '' }}>
+                                <option value="male" {{ old('gender', $student->gender) == 'male' ? 'selected' : '' }}>
                                     MALE</option>
-                                <option value="FEMALE"
-                                    {{ old('gender', $student->gender) == 'FEMALE' ? 'selected' : '' }}>FEMALE</option>
-                                <option value="OTHER" {{ old('gender', $student->gender) == 'OTHER' ? 'selected' : '' }}>
+                                <option value="female"
+                                    {{ old('gender', $student->gender) == 'female' ? 'selected' : '' }}>FEMALE</option>
+                                <option value="other" {{ old('gender', $student->gender) == 'other' ? 'selected' : '' }}>
                                     OTHER</option>
                             </select>
                             @error('gender')
@@ -363,7 +336,7 @@
                                     {{ old('last_qualification', $student->last_qualification) === 'DIPLOMA' ? 'selected' : '' }}>
                                     Diploma</option>
                                 <option value="POST_GRADUATE"
-                                    {{ old('last_qualification', $student->last_qualification) === 'POST_GRADUATE' ? 'selected' : '' }}>
+                                    {{ old('last_qualification', $student->last_qualification) === 'POST GRADUATE' ? 'selected' : '' }}>
                                     Post Graduate</option>
                                 <option value="OTHER"
                                     {{ old('last_qualification', $student->last_qualification) === 'OTHER' ? 'selected' : '' }}>
@@ -431,9 +404,120 @@
             </div>
         </div>
     </div>
+
+    <!-- PROFILE IMAGE MODAL -->
+<div class="modal fade" id="profileImageModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title text-dark">Update Profile Picture</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <img id="imagePreview"
+                     class="rounded-circle mb-3 d-none"
+                     style="width:120px;height:120px;object-fit:cover">
+
+                <input type="file"
+                       class="form-control"
+                       id="profileImageInput"
+                       accept="image/*">
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" id="saveProfileImage">
+                    Save Photo
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="editModal" id="passwordModal">
+    <div class="editOverlay" onclick="closePasswordModal()"></div>
+
+    <div class="editBox">
+
+        <!-- Header -->
+        <div class="editTop">
+            <h5 class="m-0 fw-black">
+                <i class="bi bi-shield-lock-fill me-2"></i> Change Password
+            </h5>
+            <button class="closeEdit" onclick="closePasswordModal()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <!-- Body -->
+        <div class="editBody">
+            <form id="passwordForm" data-parsley-validate>
+
+                <div class="row g-3">
+
+                    <div class="col-12">
+                        <label class="form-label">Current Password</label>
+                        <input type="password"
+                               class="form-control premium-input"
+                               name="current_password"
+                               required
+                               data-parsley-required-message="Current password is required">
+                        <div class="invalid-feedback" id="error-current_password"></div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">New Password</label>
+                        <input type="password"
+                               class="form-control premium-input"
+                               name="password"
+                               required
+                               data-parsley-minlength="8"
+                               data-parsley-required-message="New password is required"
+                               data-parsley-minlength-message="Password must be at least 8 characters">
+                        <div class="invalid-feedback" id="error-password"></div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password"
+                               class="form-control premium-input"
+                               name="password_confirmation"
+                               required
+                               data-parsley-equalto="[name='password']"
+                               data-parsley-required-message="Please confirm password"
+                               data-parsley-equalto-message="Passwords do not match">
+                    </div>
+
+                </div>
+
+                <!-- Actions -->
+                <div class="editActions mt-4">
+                    <button type="button" class="btnCancel" onclick="closePasswordModal()">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </button>
+
+                    <button type="submit" class="btnSave">
+                        <i class="bi bi-check-circle me-1"></i> Update Password
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
 @endsection
 
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+
     <!-- Copy feature -->
     <script>
         document.querySelectorAll("[data-copy]").forEach(btn => {
@@ -446,63 +530,75 @@
             });
         });
     </script>
-
-    <script>
-        const editBtn = document.getElementById("editBtn");
-        const editModal = document.getElementById("editModal");
-        const editOverlay = document.getElementById("editOverlay");
-        const closeEdit = document.getElementById("closeEdit");
-        const cancelEdit = document.getElementById("cancelEdit");
-
-        function openEdit() {
-            editModal.classList.add("show");
-        }
-
-        function closeModal() {
-            editModal.classList.remove("show");
-        }
-
-        editBtn?.addEventListener("click", openEdit);
-        closeEdit?.addEventListener("click", closeModal);
-        cancelEdit?.addEventListener("click", closeModal);
-        editOverlay?.addEventListener("click", closeModal);
-
-        // ESC close
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeModal();
-        });
-
-        //  Save button demo
-        document.getElementById("saveEdit")?.addEventListener("click", () => {
-            alert("Profile Updated Successfully ");
-            closeModal();
-        });
-    </script>
-
-    {{-- <script>
+<script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    document.getElementById('saveEdit').addEventListener('click', function () {
+    const modal   = document.getElementById('editModal');
+    const overlay = document.getElementById('editOverlay');
+    const form    = document.getElementById('profileEditForm');
 
-        const formData = new FormData();
+    const editBtn   = document.getElementById('editBtn');
+    const saveBtn   = document.getElementById('saveEdit');
+    const cancelBtn = document.getElementById('cancelEdit');
+    const closeBtn  = document.getElementById('closeEdit');
 
-        formData.append('full_name', document.getElementById('editName').value);
-        formData.append('email', document.getElementById('editEmail').value);
-        formData.append('phone_number', document.getElementById('editPhone').value);
-        formData.append('dob', document.getElementById('editDob').value);
-        formData.append('guardian_name', document.getElementById('editGuardian').value);
-        formData.append('guardian_mobile', document.getElementById('editGuardianPhone').value);
-        formData.append('address', document.getElementById('editAddress').value);
+    /* =====================
+       MODAL CONTROLS
+    ===================== */
+    function openEditModal() {
+        modal.classList.add('show');
+        document.body.classList.add('modal-open');
+    }
 
-        document.querySelectorAll('select[name]').forEach(select => {
-            formData.append(select.name, select.value);
+    function closeEditModal() {
+        modal.classList.remove('show');
+        document.body.classList.remove('modal-open');
+    }
+
+    editBtn?.addEventListener('click', openEditModal);
+    cancelBtn?.addEventListener('click', closeEditModal);
+    closeBtn?.addEventListener('click', closeEditModal);
+    overlay?.addEventListener('click', closeEditModal);
+
+    window.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeEditModal();
+    });
+
+    /* =====================
+       CLEAR ERRORS
+    ===================== */
+    function clearErrors() {
+        form.querySelectorAll('.invalid-feedback').forEach(el => {
+            el.innerText = '';
+            el.style.display = 'none';
         });
 
+        form.querySelectorAll('.is-invalid').forEach(el => {
+            el.classList.remove('is-invalid');
+        });
+    }
+
+    /* =====================
+       SAVE PROFILE
+    ===================== */
+    saveBtn?.addEventListener('click', function () {
+
+        // 🔹 Parsley validation
+        if (!$(form).parsley().validate()) {
+            openEditModal();
+            return;
+        }
+
+        clearErrors();
+
+        const formData = new FormData(form);
+        formData.append('_method', 'PATCH');
+
         fetch("{{ route('student.profile.update') }}", {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Accept": "application/json"
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
             },
             body: formData
         })
@@ -512,178 +608,152 @@ document.addEventListener('DOMContentLoaded', function () {
             return data;
         })
         .then(data => {
-            alert(data.message);
+            alert(data.message || 'Profile updated successfully');
+            closeEditModal();
             location.reload();
         })
         .catch(error => {
+
+            // 🔥 KEEP MODAL OPEN
+            openEditModal();
+            clearErrors();
+
             if (error.errors) {
-                alert(Object.values(error.errors)[0][0]);
+                let firstInvalid = null;
+
+                Object.keys(error.errors).forEach(field => {
+                    const input = form.querySelector(`[name="${field}"]`);
+                    const errorBox = document.getElementById(`error-${field}`);
+
+                    if (input) {
+                        input.classList.add('is-invalid');
+                        if (!firstInvalid) firstInvalid = input;
+                    }
+
+                    if (errorBox) {
+                        errorBox.innerText = error.errors[field][0];
+                        errorBox.style.display = 'block';
+                    }
+                });
+
+                firstInvalid?.focus();
             } else {
                 alert('Update failed. Please try again.');
             }
-            console.error(error);
         });
     });
 
 });
-</script> --}}
+</script>
 
-    {{-- <script>
-document.addEventListener('DOMContentLoaded', function () {
 
-    document.getElementById('saveEdit').addEventListener('click', function () {
-
-        const formData = new FormData();
-
-        formData.append('full_name', document.getElementById('editName').value);
-        formData.append('email', document.getElementById('editEmail').value);
-        formData.append('phone_number', document.getElementById('editPhone').value);
-        formData.append('dob', document.getElementById('editDob').value);
-        formData.append('guardian_name', document.getElementById('editGuardian').value);
-        formData.append('guardian_mobile', document.getElementById('editGuardianPhone').value);
-        formData.append('address', document.getElementById('editAddress').value);
-
-        // Add the select fields by name attribute
-        formData.append('gender', document.querySelector('select[name="gender"]').value);
-        formData.append('last_qualification', document.querySelector('select[name="last_qualification"]').value);
-
-        fetch("{{ route('student.profile.update') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Accept": "application/json"
-            },
-            body: formData
-        })
-        .then(async response => {
-            const data = await response.json();
-            if (!response.ok) throw data;
-            return data;
-        })
-        .then(data => {
-            alert(data.message);
-            location.reload();
-        })
-        .catch(error => {
-            if (error.errors) {
-                alert(Object.values(error.errors)[0][0]);
-            } else {
-                alert('Update failed. Please try again.');
-            }
-            console.error(error);
-        });
-    });
-
+<script>
+document.getElementById('editAvatarBtn').addEventListener('click', () => {
+    new bootstrap.Modal(
+        document.getElementById('profileImageModal')
+    ).show();
 });
-</script> --}}
 
-    {{-- <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.getElementById('profileImageInput').addEventListener('change', e => {
+    const file = e.target.files[0];
+    const preview = document.getElementById('imagePreview');
 
-    document.getElementById('saveEdit').addEventListener('click', function () {
-        console.log('Save button clicked');
+    if (!file) return;
 
-        const formData = new FormData();
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove('d-none');
+});
 
-        formData.append('full_name', document.getElementById('editName').value);
-        formData.append('email', document.getElementById('editEmail').value);
-        formData.append('phone_number', document.getElementById('editPhone').value);
-        formData.append('dob', document.getElementById('editDob').value);
-        formData.append('gender', document.querySelector('select[name="gender"]').value);
-        formData.append('last_qualification', document.querySelector('select[name="last_qualification"]').value);
-        formData.append('guardian_name', document.getElementById('editGuardian').value);
-        formData.append('guardian_mobile', document.getElementById('editGuardianPhone').value);
-        formData.append('address', document.getElementById('editAddress').value);
+document.getElementById('saveProfileImage').addEventListener('click', () => {
 
-        // Log all form data
-        for (let pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
+    const input = document.getElementById('profileImageInput');
+    if (!input.files.length) {
+        alert('Please select an image');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('profile_image', input.files[0]);
+
+    fetch("{{ route('student.profile.avatar.update') }}", {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('profileAvatar').src = data.image;
+            bootstrap.Modal.getInstance(
+                document.getElementById('profileImageModal')
+            ).hide();
         }
-
-        fetch("{{ route('student.profile.update') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Accept": "application/json"
-            },
-            body: formData
-        })
-        .then(async response => {
-            console.log('Response status:', response.status);
-            const data = await response.json();
-            console.log('Response data:', data);
-            if (!response.ok) throw data;
-            return data;
-        })
-        .then(data => {
-            alert(data.message);
-            location.reload();
-        })
-        .catch(error => {
-            console.error('Error caught:', error);
-            if (error.errors) {
-                alert(Object.values(error.errors)[0][0]);
-            } else if (error.message) {
-                alert(error.message);
-            } else {
-                alert('Update failed. Please try again.');
-            }
-        });
-    });
-
+    })
+    .catch(() => alert('Image upload failed'));
 });
-</script> --}}
+</script>
+<script>
+function openPasswordModal() {
+    document.getElementById('passwordModal').classList.add('active');
+    document.body.classList.add('modal-open');
+}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+function closePasswordModal() {
+    document.getElementById('passwordModal').classList.remove('active');
+    document.body.classList.remove('modal-open');
+}
 
-            document.getElementById('saveEdit').addEventListener('click', function() {
-                console.log('Save button clicked');
+/* Submit password form */
+document.getElementById('passwordForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-                const formData = new FormData();
+    if (!$(this).parsley().validate()) return;
 
-                formData.append('_method', 'PATCH'); // Add this line for Laravel method spoofing
+    const formData = new FormData(this);
+    formData.append('_method', 'PATCH');
 
-                formData.append('full_name', document.getElementById('editName').value);
-                formData.append('email', document.getElementById('editEmail').value);
-                formData.append('phone_number', document.getElementById('editPhone').value);
-                formData.append('dob', document.getElementById('editDob').value);
-                formData.append('gender', document.querySelector('select[name="gender"]').value);
-                formData.append('last_qualification', document.querySelector(
-                    'select[name="last_qualification"]').value);
-                formData.append('guardian_name', document.getElementById('editGuardian').value);
-                formData.append('guardian_mobile', document.getElementById('editGuardianPhone').value);
-                formData.append('address', document.getElementById('editAddress').value);
-
-                fetch("{{ route('student.profile.update') }}", {
-                        method: "POST", // Keep as POST
-                        headers: {
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                            "Accept": "application/json"
-                        },
-                        body: formData
-                    })
-                    .then(async response => {
-                        const data = await response.json();
-                        if (!response.ok) throw data;
-                        return data;
-                    })
-                    .then(data => {
-                        alert(data.message);
-                        location.reload();
-                    })
-                    .catch(error => {
-                        console.error('Error caught:', error);
-                        if (error.errors) {
-                            alert(Object.values(error.errors)[0][0]);
-                        } else if (error.message) {
-                            alert(error.message);
-                        } else {
-                            alert('Update failed. Please try again.');
-                        }
-                    });
+    fetch("{{ route('student.password.update') }}", {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message || 'Password updated successfully');
+        closePasswordModal();
+        this.reset();
+    })
+    .catch(err => {
+        if (err.errors) {
+            Object.keys(err.errors).forEach(field => {
+                document.getElementById(`error-${field}`).innerText = err.errors[field][0];
             });
+        } else {
+            alert('Failed to update password');
+        }
+    });
+});
+</script>
+<script>
+function openPasswordModal() {
+    const modal = document.getElementById('passwordModal');
+    modal.classList.add('show');
+    document.body.classList.add('modal-open');
+}
 
-        });
-    </script>
+function closePasswordModal() {
+    const modal = document.getElementById('passwordModal');
+    modal.classList.remove('show');
+    document.body.classList.remove('modal-open');
+}
+</script>
+
+
+
 @endpush

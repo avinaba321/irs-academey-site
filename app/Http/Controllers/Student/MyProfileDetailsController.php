@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class MyProfileDetailsController extends Controller
 {
@@ -46,4 +48,58 @@ class MyProfileDetailsController extends Controller
             'message' => 'Profile updated successfully'
         ]);
     }
+
+    public function updateAvatar(Request $request)
+{
+    $request->validate([
+        'profile_image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
+
+    $student = Auth::guard('student')->user();
+
+    // Delete old image
+    if ($student->profile_image) {
+        Storage::disk('public')->delete($student->profile_image);
+    }
+
+    $path = $request->file('profile_image')
+        ->store('students_img', 'public');
+
+    $student->update([
+        'profile_image' => $path
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'image'   => asset('storage/'.$path),
+        'message' => 'Profile image updated'
+    ]);
+}
+
+public function updatePassword(Request $request)
+{
+    $student = Auth::guard('student')->user();
+
+    $request->validate([
+        'current_password' => 'required',
+        'password' => 'required|min:8|confirmed',
+    ]);
+
+    if (!Hash::check($request->current_password, $student->password)) {
+        return response()->json([
+            'errors' => [
+                'current_password' => ['Current password is incorrect']
+            ]
+        ], 422);
+    }
+
+    $student->update([
+        'password' => Hash::make($request->password)
+    ]);
+
+    return response()->json([
+        'message' => 'Password updated successfully'
+    ]);
+}
+
 }

@@ -13,6 +13,25 @@
     <!-- custom css lihk -->
     <link rel="stylesheet" href="{{ asset('student/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('student/css/dashboard.css') }}">
+    <style>
+        .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+    </style>
     @stack('styles')
 </head>
 <body>
@@ -27,6 +46,7 @@
     
     
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Add these before Parsley -->
     <!-- main js link -->
 <script src="{{ asset('student/js/main.js') }}"></script>
 @stack('scripts')
