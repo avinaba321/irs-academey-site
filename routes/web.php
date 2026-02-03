@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminBatchesController;
 use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\AdminDashboradController;
 use App\Http\Controllers\AllCourseController;
@@ -170,26 +171,18 @@ Route::middleware(['auth:student','guard.access:student'])->group(function () {
 // =================== Admin dashboade routes ==========================================
 
 Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(function () {
-    Route::get('/admin/dashboard', [AdminDashboradController::class,'index'])
-        ->name('admin.dashboard');
-
+    Route::get('/admin/dashboard', [AdminDashboradController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/courses', [AdminCourseController::class,'coursesIndex'])->name('admin-courses');
-
-    Route::post('/admin/courses/store', [AdminCourseController::class, 'store'])
-        ->name('admin.courses.store');
-
-        Route::delete('/admin/courses/{course}', 
-        [AdminCourseController::class, 'destroy']
-    )->name('admin.courses.destroy');
-
-    Route::patch(
-    '/admin/courses/{course}/status',
-    [AdminCourseController::class, 'toggleStatus']
-)->name('admin.courses.status');
-
-Route::put('/admin/courses/{course}', [AdminCourseController::class, 'update'])
-    ->name('admin.courses.update');
-    
+    Route::post('/admin/courses/store', [AdminCourseController::class, 'store'])->name('admin.courses.store');
+    Route::delete('/admin/courses/{course}',[AdminCourseController::class, 'destroy'])->name('admin.courses.destroy');
+    Route::patch('/admin/courses/{course}/status',[AdminCourseController::class, 'toggleStatus'])->name('admin.courses.status');
+    Route::put('/admin/courses/{course}', [AdminCourseController::class, 'update'])->name('admin.courses.update');
+    Route::get('/admin/batches/batches-list', [AdminBatchesController::class, 'indexBatch'])->name('admin.batches.list');
+    Route::get('/admin/batches/batches-details', [AdminBatchesController::class, 'indexBatchDetails'])->name('admin.batches.details');
+    Route::post('/admin/batches/store', [AdminBatchesController::class, 'store'])->name('admin.batches.store');
+     Route::put('/admin/batches/{id}/update', [AdminBatchesController::class, 'update'])->name('admin.batches.update');
+     Route::delete('/admin/batches/{id}/delete', [AdminBatchesController::class, 'destroy'])
+        ->name('admin.batches.destroy');
     
 });
 

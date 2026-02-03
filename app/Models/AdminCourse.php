@@ -25,4 +25,12 @@ class AdminCourse extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+     /**
+     * Get the batches for the course.
+     */
+    public function batches()
+    {
+        return $this->hasMany(Batch::class, 'course_id');
+    }
 }

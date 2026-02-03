@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="course-actions">
-                            <a href="{{ route('course-module') }}" class="btn btn-soft">
+                            <a href="" class="btn btn-soft">
                                 <i class="bi bi-eye-fill"></i> View Details
                             </a>
 
@@ -83,7 +83,7 @@
                         </div>
 
                         <div class="course-actions">
-                            <a href="{{ route('course-module') }}" class="btn btn-soft">
+                            <a href="" class="btn btn-soft">
                                 <i class="bi bi-eye-fill"></i> View Details
                             </a>
 

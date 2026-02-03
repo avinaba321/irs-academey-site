@@ -24,7 +24,7 @@
                     class="bi bi-book"></i><span>Courses</span></a>
             <a href="./trainers/trainers-list.html" class="sidebar-link"><i
                     class="bi bi-person-video2"></i><span>Teachers</span></a>
-            <a href="./batches/batches-list.html" class="sidebar-link"><i
+            <a href="{{ route('admin.batches.list') }}" class="sidebar-link"><i
                     class="bi bi-layers"></i><span>Batches</span></a>
             <a href="./attendance/attendance.html" class="sidebar-link"><i
                     class="bi bi-calendar-check"></i><span>Attendance</span></a>
