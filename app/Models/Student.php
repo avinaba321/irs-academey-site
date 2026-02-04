@@ -25,7 +25,8 @@ class Student extends Authenticatable
         'profile_image',
         'last_qualification',
         'guardian_name',
-        'guardian_mobile'
+        'guardian_mobile',
+        'class_mode'
     ];
 
     protected $hidden = [

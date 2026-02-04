@@ -57,6 +57,16 @@ class RegisterController extends Controller
             'terms' => 'accepted',
         ]);
 
+         // Add class_mode validation only for students
+        if ($request->role == 2) {
+            $rules['class_mode'] = 'required|in:0,1';
+        }
+
+        // Validate
+        $request->validate($rules, [
+            'class_mode.required' => 'Please select a class mode',
+            'class_mode.in' => 'Invalid class mode selected',
+        ]);
 
         $emailExists =
         Admin::where('email', $request->reg_email)->exists() ||
@@ -88,7 +98,8 @@ class RegisterController extends Controller
             'address'      => $request->address,
             'profile_image' => $request->profile_image,
             'guardian_name' => $request->guardian_name,
-            'guardian_mobile' => $request->guardian_mobile
+            'guardian_mobile' => $request->guardian_mobile,
+            'class_mode'     => $request->class_mode ?? 0,
         ];
 
         // ✅ Store Based on Role

@@ -14,8 +14,48 @@ class AdminBatchesController extends Controller
     {
          $courses = AdminCourse::select('id', 'title')->get();
          $batches = Batch::with('course')->latest()->get();
-        return view('Admin.admin_batches',compact('courses','batches'));
+          // 👇 Only batch names for dropdown
+        $batchNames = Batch::select('batch_name')
+            ->distinct()
+            ->orderBy('batch_name')
+            ->pluck('batch_name');
+         $batchTimings = Batch::whereNotNull('batch_timing')
+        ->select('batch_timing')
+        ->distinct()
+        ->orderBy('batch_timing')
+        ->pluck('batch_timing');
+        return view('Admin.admin_batches',compact('courses','batches','batchNames','batchTimings'));
     }
+
+   public function filter(Request $request)
+{
+    $query = Batch::with('course');
+
+    if ($request->course_id) {
+        $query->where('course_id', $request->course_id);
+    }
+
+    if ($request->batch_name) {
+        $query->where('batch_name', $request->batch_name);
+       
+    }
+    if ($request->batch_timing) {
+        $query->where('batch_timing', $request->batch_timing);
+    }
+
+    if ($request->start_date) {
+        $query->whereDate('start_date', '>=', $request->start_date);
+    }
+
+    if ($request->end_date) {
+        $query->whereDate('end_date', '<=', $request->end_date);
+    }
+
+    return response()->json([
+        'batches' => $query->latest()->get()
+    ]);
+}
+
 
     public function store(Request $request)
     {
@@ -25,7 +65,13 @@ class AdminBatchesController extends Controller
             'trainer_name' => 'required|string|max:255',
             'start_date'   => 'required|date',
             'end_date'     => 'nullable|date|after_or_equal:start_date',
-            'batch_timing' => 'required|string|max:255',
+            // 'batch_timing' => 'required|string|max:255',
+            'batch_timing' => [
+                    'required',
+                    'string',
+                     'regex:/^(\d{1,2}):(\d{2})\s?(am|pm|AM|PM)\s+(to|-)\s+(\d{1,2}):(\d{2})\s?(am|pm|AM|PM)$/i'
+                ],
+
             'meeting_link' => 'nullable|url',
             'status'       => 'required|in:1,2,3',
         ]);

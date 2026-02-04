@@ -225,6 +225,34 @@
                 padding: 16px;
             }
         }
+
+        /* Filter container spacing */
+.filter-row {
+    max-width: 100%;
+}
+
+/* Inputs styling */
+.filter-input {
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    border: 1.5px solid #ffb547;
+    box-shadow: none;
+}
+
+/* Reduce height slightly */
+.filter-input {
+    height: 42px;
+}
+
+/* Mobile tweak */
+@media (max-width: 576px) {
+    .filter-input {
+        font-size: 0.85rem;
+        height: 40px;
+    }
+}
+
     </style>
 @endpush
 @section('content')
@@ -253,8 +281,91 @@
             </div>
         </div>
 
+        {{-- <div class="row g-3 mb-4">
+            <!-- Course Filter -->
+            <div class="col-md-3">
+                <select class="form-select" id="filterCourse">
+                    <option value="">All Courses</option>
+                    @foreach ($courses as $course)
+                        <option value="{{ $course->id }}">{{ $course->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+          <div class="col-md-3">
+    <select class="form-select" id="filterBatchName">
+        <option value="">All Batches</option>
+        @foreach ($batchNames as $name)
+            <option value="{{ $name }}">{{ $name }}</option>
+        @endforeach
+    </select>
+</div>
+<div class="col-md-3">
+    <select class="form-select" id="filterBatchTiming">
+        <option value="">All Timings</option>
+        @foreach ($batchTimings as $timing)
+            <option value="{{ $timing }}">{{ $timing }}</option>
+        @endforeach
+    </select>
+</div>
+
+            <!-- Start Date -->
+            <div class="col-md-3">
+                <input type="date" class="form-control" id="filterStartDate">
+            </div>
+
+            <!-- End Date -->
+            <div class="col-md-3">
+                <input type="date" class="form-control" id="filterEndDate">
+            </div>
+        </div> --}}
+        <div class="row g-3 align-items-end filter-row mb-3">
+
+            <!-- Course -->
+            <div class="col-12 col-sm-6 col-md-3 col-lg-2">
+                <select class="form-select filter-input" id="filterCourse">
+                    <option value="">All Courses</option>
+                     @foreach ($courses as $course)
+                        <option value="{{ $course->id }}">{{ $course->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Batch -->
+            <div class="col-12 col-sm-6 col-md-3 col-lg-2">
+                <select class="form-select filter-input" id="filterBatchName">
+                    <option value="">All Batches</option>
+                            @foreach ($batchNames as $name)
+                    <option value="{{ $name }}">{{ $name }}</option>
+                @endforeach
+                </select>
+            </div>
+
+            <!-- Timing -->
+            <div class="col-12 col-sm-6 col-md-3 col-lg-2">
+                <select class="form-select filter-input" id="filterBatchTiming">
+                    <option value="">All Timings</option>
+                     @foreach ($batchTimings as $timing)
+            <option value="{{ $timing }}">{{ $timing }}</option>
+        @endforeach
+                </select>
+            </div>
+
+            <!-- Start Date -->
+            <div class="col-12 col-sm-6 col-md-3 col-lg-2">
+                <input type="date" class="form-control filter-input" id="filterStartDate">
+            </div>
+
+            <!-- End Date -->
+            <div class="col-12 col-sm-6 col-md-3 col-lg-2">
+                <input type="date" class="form-control filter-input" id="filterEndDate">
+            </div>
+
+        </div>
+
+
         <!-- BATCHES GRID -->
-        <div class="row g-4">
+        <div class="row g-4" id="batchGrid">
             @forelse($batches as $batch)
                 <!-- BATCH CARD -->
                 <div class="col-12 col-md-6 col-xl-4">
@@ -659,8 +770,8 @@
 
         <script>
             /* ==========================
-                   DELETE BATCH
-                ========================== */
+                                                   DELETE BATCH
+                                                ========================== */
             function deleteBatch(batchId) {
                 if (!confirm('Are you sure you want to delete this batch? This action cannot be undone.')) {
                     return;
@@ -725,5 +836,113 @@
                 });
 
             });
+        </script>
+        <script>
+            const filters = [
+                'filterCourse',
+                'filterBatchName',
+                'filterStartDate',
+                'filterBatchTiming',
+                'filterEndDate'
+            ];
+
+            filters.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.addEventListener('change', filterBatches);
+                el.addEventListener('keyup', filterBatches);
+            });
+
+            function filterBatches() {
+
+                const params = new URLSearchParams({
+                    course_id: document.getElementById('filterCourse').value,
+                    batch_name: document.getElementById('filterBatchName').value,
+                    batch_timing: document.getElementById('filterBatchTiming')?.value,
+                    start_date: document.getElementById('filterStartDate').value,
+                    end_date: document.getElementById('filterEndDate').value
+                });
+
+                fetch(`{{ route('admin.batches.filter') }}?${params.toString()}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const grid = document.getElementById('batchGrid');
+                        grid.innerHTML = '';
+
+                        if (!data.batches.length) {
+                            grid.innerHTML = `
+                    <div class="col-12 text-center py-5 text-muted">
+                        No batches found
+                    </div>`;
+                            return;
+                        }
+
+                        data.batches.forEach(batch => {
+                            grid.innerHTML += buildBatchCard(batch);
+                        });
+                    })
+                    .catch(err => console.error(err));
+            }
+
+            function buildBatchCard(batch) {
+
+                const statusMap = {
+                    1: `<span class="batch-status status-running">Running</span>`,
+                    2: `<span class="batch-status status-upcoming">Upcoming</span>`,
+                    3: `<span class="batch-status status-completed">Completed</span>`
+                };
+
+                return `
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="batches-card shadow-sm">
+
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="batches-avatar">
+                    ${batch.batch_name.substring(0,2).toUpperCase()}
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-link text-dark p-0" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" onclick='openEditBatch(${JSON.stringify(batch)})'>
+                                Edit
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger" onclick="deleteBatch(${batch.id})">
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h6 class="batch-title mb-1">${batch.batch_name}</h6>
+            <p class="batch-course mb-3">${batch.course?.title ?? batch.course_name}</p>
+
+            ${batch.batch_timing ? `
+                        <div class="batch-timing-row mb-3">
+                            <i class="bi bi-clock"></i> ${batch.batch_timing}
+                        </div>` : ''}
+
+            <ul class="batch-details-list mb-3">
+                <li><i class="bi bi-calendar3"></i> Start: ${batch.start_date}</li>
+                ${batch.end_date ? `<li><i class="bi bi-calendar3"></i> End: ${batch.end_date}</li>` : ''}
+                <li><i class="bi bi-person-video2"></i> Trainer: ${batch.trainer_name}</li>
+            </ul>
+
+            <div class="batch-footer">
+                <div class="students-count">
+                    <i class="bi bi-people"></i> ${batch.students_count ?? 0} students
+                </div>
+                ${statusMap[batch.status]}
+            </div>
+
+        </div>
+    </div>`;
+            }
         </script>
     @endpush

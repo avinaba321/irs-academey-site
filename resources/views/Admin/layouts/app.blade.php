@@ -15,7 +15,7 @@
 
     <!-- custom css lihk -->
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/css/dashboard.css') }}">   
     @stack('styles')
 </head>
 

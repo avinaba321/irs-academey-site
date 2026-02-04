@@ -151,7 +151,7 @@ Route::middleware(['auth:student','guard.access:student'])->group(function () {
     Route::get('/student/my_profile', [MyProfileDetailsController::class,'profileIndex'])->name('my-profile');
      Route::patch('/student/profile/update', [MyProfileDetailsController::class, 'update'])->name('student.profile.update');
     Route::post('/student/profile/avatar', [MyProfileDetailsController::class, 'updateAvatar'])->name('student.profile.avatar.update');
-     Route::patch('/student/change-password', [MyProfileDetailsController::class, 'updatePassword'])->name('student.password.update');
+     Route::post('/student/change-password', [MyProfileDetailsController::class, 'updatePassword'])->name('student.password.update');
 
     // Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
 
@@ -183,6 +183,9 @@ Route::middleware(['auth:admin','guard.access:admin','admin.ids'])->group(functi
      Route::put('/admin/batches/{id}/update', [AdminBatchesController::class, 'update'])->name('admin.batches.update');
      Route::delete('/admin/batches/{id}/delete', [AdminBatchesController::class, 'destroy'])
         ->name('admin.batches.destroy');
+    Route::get('/admin/batches/filter', [AdminBatchesController::class, 'filter'])
+    ->name('admin.batches.filter');
+
     
 });
 

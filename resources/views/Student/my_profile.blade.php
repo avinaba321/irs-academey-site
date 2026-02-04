@@ -457,55 +457,29 @@
         <div class="editBody">
             <form id="passwordForm" data-parsley-validate>
 
-                <div class="row g-3">
+    <div class="mb-3">
+        <label>Current Password</label>
+        <input type="password" name="current_password" class="form-control" required>
+        <div class="text-danger small" id="error-current_password"></div>
+    </div>
 
-                    <div class="col-12">
-                        <label class="form-label">Current Password</label>
-                        <input type="password"
-                               class="form-control premium-input"
-                               name="current_password"
-                               required
-                               data-parsley-required-message="Current password is required">
-                        <div class="invalid-feedback" id="error-current_password"></div>
-                    </div>
+    <div class="mb-3">
+        <label>New Password</label>
+        <input type="password" name="password" class="form-control" required
+               data-parsley-minlength="8">
+        <div class="text-danger small" id="error-password"></div>
+    </div>
 
-                    <div class="col-12">
-                        <label class="form-label">New Password</label>
-                        <input type="password"
-                               class="form-control premium-input"
-                               name="password"
-                               required
-                               data-parsley-minlength="8"
-                               data-parsley-required-message="New password is required"
-                               data-parsley-minlength-message="Password must be at least 8 characters">
-                        <div class="invalid-feedback" id="error-password"></div>
-                    </div>
+    <div class="mb-3">
+        <label>Confirm Password</label>
+        <input type="password" name="password_confirmation" class="form-control" required>
+    </div>
 
-                    <div class="col-12">
-                        <label class="form-label">Confirm New Password</label>
-                        <input type="password"
-                               class="form-control premium-input"
-                               name="password_confirmation"
-                               required
-                               data-parsley-equalto="[name='password']"
-                               data-parsley-required-message="Please confirm password"
-                               data-parsley-equalto-message="Passwords do not match">
-                    </div>
+    <button type="submit" class="btn btn-primary w-100">
+        Update Password
+    </button>
+</form>
 
-                </div>
-
-                <!-- Actions -->
-                <div class="editActions mt-4">
-                    <button type="button" class="btnCancel" onclick="closePasswordModal()">
-                        <i class="bi bi-x-circle me-1"></i> Cancel
-                    </button>
-
-                    <button type="submit" class="btnSave">
-                        <i class="bi bi-check-circle me-1"></i> Update Password
-                    </button>
-                </div>
-
-            </form>
         </div>
 
     </div>
@@ -695,7 +669,7 @@ document.getElementById('saveProfileImage').addEventListener('click', () => {
     .catch(() => alert('Image upload failed'));
 });
 </script>
-<script>
+{{-- <script>
 function openPasswordModal() {
     document.getElementById('passwordModal').classList.add('active');
     document.body.classList.add('modal-open');
@@ -752,7 +726,72 @@ function closePasswordModal() {
     modal.classList.remove('show');
     document.body.classList.remove('modal-open');
 }
+</script> --}}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const modal = document.getElementById('passwordModal');
+    const form  = document.getElementById('passwordForm');
+
+    /* OPEN / CLOSE */
+    window.openPasswordModal = function () {
+        modal.classList.add('show');
+        document.body.classList.add('modal-open');
+    };
+
+    window.closePasswordModal = function () {
+        modal.classList.remove('show');
+        document.body.classList.remove('modal-open');
+        clearErrors();
+        form.reset();
+    };
+
+    /* CLEAR ERRORS */
+    function clearErrors() {
+        document.querySelectorAll('[id^="error-"]').forEach(el => el.innerText = '');
+    }
+
+    /* SUBMIT */
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!$(form).parsley().validate()) return;
+
+        clearErrors();
+
+        fetch("{{ route('student.password.update') }}", {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            },
+            body: new FormData(form)
+        })
+        .then(async res => {
+            const data = await res.json();
+            if (!res.ok) throw data;
+            return data;
+        })
+        .then(data => {
+            alert(data.message);
+            closePasswordModal();
+        })
+        .catch(err => {
+            if (err.errors) {
+                Object.keys(err.errors).forEach(field => {
+                    const el = document.getElementById(`error-${field}`);
+                    if (el) el.innerText = err.errors[field][0];
+                });
+            } else {
+                alert('Password update failed');
+            }
+        });
+    });
+
+});
 </script>
+
 
 
 
