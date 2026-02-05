@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Student\AllStudentCourseController;
 use App\Http\Controllers\Student\StudentDashboradController;
+use App\Http\Controllers\Student\StudentPaymentDetailsContoller;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -158,12 +159,13 @@ Route::middleware(['auth:student','guard.access:student'])->group(function () {
     // Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
 
     Route::get('/student/all_courses', [AllStudentCourseController::class, 'index'])->name('all-courses');
+     Route::get('/student/payments', [StudentPaymentDetailsContoller::class,'myPayments'])->name('payments');
 
     Route::get('/student/my_courses', fn () => view('Student.my_coures'))->name('my-courses');
     Route::get('/student/course_material', fn () => view('Student.courses_material'))->name('course-material');
     Route::get('/student/batches', fn () => view('Student.batches'))->name('batches');
-    Route::get('/student/payments', fn () => view('Student.payments'))->name('payments');
-    Route::get('/student/queries', fn () => view('Student.queries'))->name('queries');
+    // Route::get('/student/payments', fn () => view('Student.payments'))->name('payments');
+     Route::get('/student/queries', fn () => view('Student.queries'))->name('queries');
     Route::get('/student/certificate', fn () => view('Student.certificate'))->name('certificate');
     Route::get('/student/settings', fn () => view('Student.settings'))->name('settings');
 

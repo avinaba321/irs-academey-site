@@ -8,6 +8,55 @@
             font-size: 1.1rem;
             line-height: 1.3;
         }
+        /* Payment modal styling */
+.payment-modal {
+    background: linear-gradient(
+        180deg,
+        rgba(28, 32, 46, 0.95),
+        rgba(18, 20, 30, 0.98)
+    );
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Header spacing */
+.payment-modal .modal-header {
+    padding: 1.2rem 1.5rem 0.5rem;
+}
+
+/* Body spacing */
+.payment-modal .modal-body {
+    padding: 1.5rem;
+}
+
+/* Text */
+.payment-modal .modal-title {
+    font-weight: 600;
+}
+
+/* Buttons */
+.payment-modal .btn-warning {
+    background: #ffc107;
+    border: none;
+    color: #000;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.payment-modal .btn-outline-warning {
+    border-radius: 12px;
+    padding: 12px;
+}
+
+/* Close button hover */
+.payment-modal .btn-close {
+    opacity: 0.8;
+}
+.payment-modal .btn-close:hover {
+    opacity: 1;
+}
+
     </style>
 @endpush
 
@@ -186,7 +235,7 @@
             @endforelse
 
         </div>
-        <div class="modal fade" id="paymentChoiceModal">
+        {{-- <div class="modal fade" id="paymentChoiceModal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -205,7 +254,46 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+        <div class="modal fade" id="paymentChoiceModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content payment-modal">
+
+            <!-- Header -->
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-white">
+                    Choose Payment Option
+                </h5>
+
+                <!-- ❌ Close button -->
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body text-center">
+
+                <p class="text-muted mb-4">
+                    Select how you’d like to pay for this course
+                </p>
+
+                <button class="btn btn-warning w-100 mb-3 fw-semibold"
+                        onclick="payNow('full')">
+                    💳 Pay Full Amount
+                </button>
+
+                <button class="btn btn-outline-warning w-100 fw-semibold"
+                        onclick="payNow('installment')">
+                    🧾 Pay in 3 Installments
+                </button>
+
+            </div>
         </div>
+    </div>
+</div>
+
 
 
         <!-- Load More Button (optional later) -->
