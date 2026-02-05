@@ -52,4 +52,10 @@ class Student extends Authenticatable
             $student->save();
         });
     }
+
+        public function isProfileComplete(): bool
+    {
+        return !is_null($this->dob);
+    }
+
 }

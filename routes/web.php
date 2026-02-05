@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\AdminDashboradController;
 use App\Http\Controllers\AllCourseController;
 use App\Http\Controllers\Student\MyProfileDetailsController;
+use App\Http\Controllers\Student\StudentPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -152,6 +153,7 @@ Route::middleware(['auth:student','guard.access:student'])->group(function () {
      Route::patch('/student/profile/update', [MyProfileDetailsController::class, 'update'])->name('student.profile.update');
     Route::post('/student/profile/avatar', [MyProfileDetailsController::class, 'updateAvatar'])->name('student.profile.avatar.update');
      Route::post('/student/change-password', [MyProfileDetailsController::class, 'updatePassword'])->name('student.password.update');
+     
 
     // Route::get('/student/all_courses', fn () => view('Student.all_courses'))->name('all-courses');
 
@@ -164,6 +166,17 @@ Route::middleware(['auth:student','guard.access:student'])->group(function () {
     Route::get('/student/queries', fn () => view('Student.queries'))->name('queries');
     Route::get('/student/certificate', fn () => view('Student.certificate'))->name('certificate');
     Route::get('/student/settings', fn () => view('Student.settings'))->name('settings');
+
+    // payment selection
+Route::post('/student/payment/initiate', 
+    [StudentPaymentController::class, 'initiate']
+)->name('student.payment.initiate');
+
+// razorpay callback
+Route::post('/student/payment/verify', 
+    [StudentPaymentController::class, 'verify']
+)->name('student.payment.verify');
+
 
 });
 

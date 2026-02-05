@@ -49,6 +49,7 @@
 <!-- Add these before Parsley -->
     <!-- main js link -->
 <script src="{{ asset('student/js/main.js') }}"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 @stack('scripts')
 </body>
 </html>
