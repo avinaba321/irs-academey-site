@@ -744,7 +744,7 @@
                 });
         }
     </script> --}}
-    <script>
+    {{-- <script>
     let selectedCourseId = null;
 
     document.querySelectorAll('.purchaseBtn').forEach(btn => {
@@ -828,12 +828,42 @@
                 },
 
                 // ❌ OPTIONAL: handle modal close / failure
+                 // ❌ POPUP CLOSED / CANCELLED
                 modal: {
                     ondismiss: function () {
-                        console.log("Payment popup closed");
+                        fetch("{{ route('student.payment.fail') }}", {
+                            method: "POST",
+                            headers: {
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                razorpay_order_id: data.order_id,
+                                reason: 'User closed payment popup'
+                            })
+                        });
                     }
                 }
             };
+
+            // ❌ PAYMENT FAILED EVENT
+            rzp.on('payment.failed', function (response) {
+
+                fetch("{{ route('student.payment.fail') }}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        razorpay_order_id: response.error.metadata.order_id,
+                        reason: response.error.reason
+                    })
+                });
+
+                alert(response.error.description || 'Payment failed');
+            });
+
 
             new Razorpay(options).open();
         })
@@ -841,6 +871,132 @@
             alert("Payment initiation failed");
         });
     }
+</script> --}}
+<script>
+let selectedCourseId = null;
+
+document.querySelectorAll('.purchaseBtn').forEach(btn => {
+    btn.addEventListener('click', function () {
+
+        const profileComplete = this.dataset.profileComplete === '1';
+
+        if (!profileComplete) {
+            openEditModal();
+            return;
+        }
+
+        selectedCourseId = this.dataset.courseId;
+
+        new bootstrap.Modal(
+            document.getElementById('paymentChoiceModal')
+        ).show();
+    });
+});
+
+function payNow(type) {
+
+    fetch("{{ route('student.payment.initiate') }}", {
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            course_id: selectedCourseId,
+            payment_type: type
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (!data.success) {
+            alert(data.message || 'Payment failed');
+            return;
+        }
+
+        const options = {
+            key: data.key,
+            amount: data.amount,
+            currency: "INR",
+            name: "Your Academy",
+            description: "Course Payment",
+            order_id: data.order_id,
+
+            // ✅ SUCCESS
+            handler: function (response) {
+
+                fetch("{{ route('student.payment.verify') }}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_signature: response.razorpay_signature
+                    })
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) {
+                        alert("Payment successful 🎉");
+                        location.reload();
+                    } else {
+                        alert("Payment verification failed");
+                    }
+                });
+            },
+
+            // ❌ USER CLOSED POPUP
+            modal: {
+                ondismiss: function () {
+                    fetch("{{ route('student.payment.fail') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            razorpay_order_id: data.order_id,
+                            reason: 'User closed payment popup'
+                        })
+                    });
+                }
+            }
+        };
+
+        // ✅ CREATE INSTANCE FIRST
+        const rzp = new Razorpay(options);
+
+        // ❌ PAYMENT FAILED EVENT
+        rzp.on('payment.failed', function (response) {
+
+            fetch("{{ route('student.payment.fail') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    razorpay_order_id: response.error.metadata.order_id,
+                    reason: response.error.reason
+                })
+            });
+
+            alert(response.error.description || 'Payment failed');
+        });
+
+        // 🚀 OPEN RAZORPAY
+        rzp.open();
+    })
+    .catch(() => {
+        alert("Payment initiation failed");
+    });
+}
 </script>
+
 
 @endpush

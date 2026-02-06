@@ -31,9 +31,14 @@ class InstallmentPayment extends Model
        RELATIONSHIPS
     ====================== */
 
-    public function studentPayment()
+    // public function studentPayment()
+    // {
+    //     return $this->belongsTo(StudentPayment::class,'student_payment_id');
+    // }
+
+     public function payment()
     {
-        return $this->belongsTo(StudentPayment::class);
+        return $this->belongsTo(StudentPayment::class, 'student_payment_id');
     }
 
     /* ======================

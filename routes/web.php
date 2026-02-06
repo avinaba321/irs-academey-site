@@ -179,6 +179,18 @@ Route::post('/student/payment/verify',
     [StudentPaymentController::class, 'verify']
 )->name('student.payment.verify');
 
+Route::post('/student/payment/fail',
+    [StudentPaymentController::class, 'fail']
+)->name('student.payment.fail');
+
+ Route::get('/my-payments', [StudentPaymentDetailsContoller::class, 'myPayments'])
+        ->name('student.payments');
+
+ Route::get(
+    '/student/invoice/{installment}',
+    [StudentPaymentDetailsContoller::class, 'downloadInvoice']
+)->name('student.invoice.download');
+
 
 });
 
