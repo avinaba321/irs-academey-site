@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class Student extends Authenticatable
 {
-   use Notifiable;
+    use Notifiable;
 
     protected $table = 'students';
 
@@ -33,7 +33,7 @@ class Student extends Authenticatable
         'password',
     ];
 
-     protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
@@ -53,9 +53,23 @@ class Student extends Authenticatable
         });
     }
 
-        public function isProfileComplete(): bool
+    public function isProfileComplete(): bool
     {
         return !is_null($this->dob);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(StudentPayment::class);
+    }
+
+    public function batches()
+    {
+        return $this->belongsToMany(
+            Batch::class,
+            'batch_students',  // pivot table name
+            'student_id',      // foreign key for current model
+            'batch_id'         // foreign key for related model
+        )->withTimestamps();  // ✅ THIS IS IMPORTANT
+    }
 }

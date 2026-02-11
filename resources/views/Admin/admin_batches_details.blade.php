@@ -132,7 +132,7 @@
 @endpush
 @section('content')
 
-<div class="container py-4">
+{{-- <div class="container py-4">
             <div class="d-flex align-items-center mb-3">
                 <button class="btn btn-outline-danger back-btn" onclick="goBack()">
                     <i class="bi bi-arrow-left"></i>
@@ -239,13 +239,111 @@
 
             </div>
 
+</div> --}}
+
+<div class="container py-4">
+
+    <h4 class="mb-4">
+        Manage Materials - {{ $batch->batch_name }}
+    </h4>
+
+    {{-- ADD MATERIAL FORM --}}
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST" 
+                  action="{{ route('admin.batch.materials.store',$batch->id) }}"
+                  enctype="multipart/form-data">
+                @csrf
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label>Title</label>
+                        <input type="text" name="title" 
+                               class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Type</label>
+                        <select name="type" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="pdf">PDF</option>
+                            <option value="video">Video</option>
+                            <option value="text">Text</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label>Description</label>
+                        <textarea name="description" 
+                                  class="form-control"></textarea>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Upload File (PDF/Video)</label>
+                        <input type="file" name="file" 
+                               class="form-control">
+                    </div>
+
+                </div>
+
+                <button class="btn btn-success mt-3">
+                    Add Material
+                </button>
+            </form>
         </div>
+    </div>
+
+    {{-- MATERIAL LIST --}}
+    <div class="card">
+        <div class="card-body">
+
+            <h5>All Materials</h5>
+
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($batch->materials as $material)
+                    <tr>
+                        <td>{{ $material->title }}</td>
+                        <td>{{ ucfirst($material->type) }}</td>
+                        <td>
+                            <form method="POST" 
+                                  action="{{ route('admin.material.delete',$material->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="3" class="text-center">
+                            No materials found
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
 
 @endsection
 @push('scripts')
-<script>
+{{-- <script>
         function goBack() {
             window.history.back();
         }
-    </script>
+    </script> --}}
 @endpush

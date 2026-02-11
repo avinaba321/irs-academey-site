@@ -152,7 +152,11 @@ class StudentPaymentController extends Controller
 
         // ✅ CREATE INSTALLMENTS WITH PROPER ROUNDING
         if ($request->payment_type === 'installment') {
+             $currentDate = now();
             for ($i = 1; $i <= $totalInstallments; $i++) {
+                 $dueDate = $i === 1 
+                    ? $currentDate->copy() 
+                    : $currentDate->copy()->addDays(30 * ($i - 1));
                 InstallmentPayment::create([
                     'student_payment_id' => $payment->id,
                     'installment_number' => $i,
@@ -161,6 +165,7 @@ class StudentPaymentController extends Controller
                                             ? $lastInstallmentAmount 
                                             : $installmentAmount,
                     'status'             => 'pending',
+                    'due_date'           => $dueDate,
                 ]);
             }
         }
@@ -175,7 +180,11 @@ class StudentPaymentController extends Controller
         }
 
         if ($request->payment_type === 'installment' && $payment->installments()->count() === 0) {
+             $currentDate = now();
             for ($i = 1; $i <= $totalInstallments; $i++) {
+                $dueDate = $i === 1 
+                    ? $currentDate->copy() 
+                    : $currentDate->copy()->addDays(30 * ($i - 1));
                 InstallmentPayment::create([
                     'student_payment_id' => $payment->id,
                     'installment_number' => $i,

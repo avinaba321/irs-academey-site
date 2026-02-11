@@ -17,6 +17,11 @@ class Batch extends Model
         'batch_timing',
         'meeting_link',
         'status',
+        'batch_days',
+    ];
+
+    protected $casts = [
+        'batch_days' => 'array',
     ];
 
     /**
@@ -35,5 +40,25 @@ class Batch extends Model
         return $this->belongsTo(Admin::class, 'admin_id');
     }
 
-    
+    // ✅ ADD TIMESTAMPS TO PIVOT TABLE
+    public function students()
+    {
+        return $this->belongsToMany(
+            Student::class,
+            'batch_students',  // pivot table name
+            'batch_id',        // foreign key on pivot table for current model
+            'student_id'       // foreign key on pivot table for related model
+        )->withTimestamps();  // ✅ THIS IS IMPORTANT
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function materials()
+{
+    return $this->hasMany(BatchMaterial::class);
+}
+
 }

@@ -25,7 +25,7 @@
         </div>
 
         <!-- Batch Card -->
-        <div class="batch-card">
+        {{-- <div class="batch-card">
 
             <!-- head chips -->
             <div class="batch-head">
@@ -110,14 +110,145 @@
                 </div>
             </div>
 
-        </div>
+        </div> --}}
+
+        @forelse($batches as $batch)
+
+            <div class="batch-card">
+
+                <!-- Header -->
+                <div class="batch-head">
+                    <div class="chip-row">
+                        <span class="chip green">
+                            <i class="bi bi-patch-check-fill"></i>
+                            COURSE : {{ $batch->course->title }}
+                        </span>
+                    </div>
+
+                    <div class="chip-row">
+                        <span class="chip blue">
+                            <i class="bi bi-calendar2-week-fill"></i>
+                            Batch : {{ $batch->batch_name }}
+                        </span>
+
+                        <span class="chip gray">
+                            <i class="bi bi-calendar-event-fill"></i>
+                            Start Date : <b>{{ \Carbon\Carbon::parse($batch->start_date)->format('d-m-Y') }}</b>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Timing -->
+                <div class="table-wrap">
+                    <table class="batch-table">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Time</th>
+                                <th>Trainer</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>{{ implode(', ', $batch->batch_days ?? []) }}</td>
+                                <td>{{ $batch->batch_timing }}</td>
+                                <td>{{ $batch->trainer_name }}</td>
+                                <td>
+                                    @if ($batch->status == 1)
+                                        <span class="mode-pill online">Running</span>
+                                    @elseif($batch->status == 2)
+                                        <span class="mode-pill upcoming">Upcoming</span>
+                                    @else
+                                        <span class="mode-pill offline">Completed</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Attendance Button -->
+                <div class="batch-footer">
+                    <button class="btn btn-soft" data-bs-toggle="modal"
+                        data-bs-target="#attendanceModal{{ $batch->id }}">
+                        View Attendance
+                    </button>
+                </div>
+
+            </div>
+
+            {{-- Attendance Modal --}}
+            <div class="modal fade" id="attendanceModal{{ $batch->id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="att-modal-head">
+                            <h6>Attendance Details</h6>
+                        </div>
+
+                        <div class="att-modal-body">
+
+                            @php
+                                $present = $batch->attendances->where('status', 'present')->count();
+                                $absent = $batch->attendances->where('status', 'absent')->count();
+                                $postpone = $batch->attendances->where('status', 'postpone')->count();
+                            @endphp
+
+                            <div class="att-chips">
+                                Present : {{ $present }} |
+                                Absent : {{ $absent }} |
+                                Postpone : {{ $postpone }}
+                            </div>
+
+                            <table class="att-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Login</th>
+                                        <th>Logout</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @forelse($batch->attendances as $att)
+                                        <tr>
+                                            <td>{{ $att->date }}</td>
+                                            <td>{{ $att->login_time ?? '-' }}</td>
+                                            <td>{{ $att->logout_time ?? '-' }}</td>
+                                            <td>{{ ucfirst($att->status) }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4">No attendance records</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        @empty
+
+            <div class="text-center py-5">
+                <h5>No Batches Assigned</h5>
+            </div>
+
+        @endforelse
+
 
     </div>
 
 
     <!--=========Premium Attendance Modal==========-->
 
-    <div class="modal fade premium-modal" id="attendanceModal" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade premium-modal" id="attendanceModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
 
@@ -220,6 +351,6 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
 @endsection

@@ -151,6 +151,7 @@
                         <th class="text-center">Installment</th>
                         <th class="text-center">Amount</th>
                         <th class="text-center">Paid On</th>
+                        <th class="text-center">Due Date</th>
                         <th class="text-center">Transaction ID</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Action</th>
@@ -172,12 +173,15 @@
                                 {{ $installment->paid_at ? $installment->paid_at->format('d-m-Y h:i A') : '-' }}
                             </td>
                             <td class="text-center">
+                                {{ $installment->due_date ? $installment->due_date->format('d-m-Y h:i A') : '-' }}
+                            </td>
+                            <td class="text-center">
                                 @if($installment->razorpay_payment_id)
-                                    <small class="text-muted font-monospace">
+                                    <small class="text-white font-monospace">
                                         {{ Str::limit($installment->razorpay_payment_id, 20) }}
                                     </small>
                                 @else
-                                    <span class="text-muted">—</span>
+                                    <span class="text-white">—</span>
                                 @endif
                             </td>
                             <td class="text-center">
