@@ -15,6 +15,7 @@ use App\Http\Controllers\Student\AllStudentCourseController;
 use App\Http\Controllers\Student\MyBatchController;
 use App\Http\Controllers\Student\StudentDashboradController;
 use App\Http\Controllers\Student\StudentMaterialController;
+use App\Http\Controllers\Student\StudentNotificationController;
 use App\Http\Controllers\Student\StudentPaymentDetailsContoller;
 
 // Route::get('/', function () {
@@ -208,6 +209,21 @@ Route::middleware(['auth:student', 'guard.access:student'])->group(function () {
         Route::post('student/materials/{id}/comment',
             [StudentMaterialController::class, 'comment']
         )->name('materials.comment');
+
+        Route::get('/student/notifications/count', [StudentNotificationController::class, 'count'])
+        ->name('student.notifications.count');
+    
+    Route::get('/student/notifications', [StudentNotificationController::class, 'index'])
+        ->name('student.notifications.index');
+    
+    Route::post('/student/notifications/{id}/read', [StudentNotificationController::class, 'markAsRead'])
+        ->name('student.notifications.read');
+    
+    Route::post('/student/notifications/read-all', [StudentNotificationController::class, 'markAllAsRead'])
+        ->name('student.notifications.read-all');
+    
+    Route::delete('/student/notifications/{id}', [StudentNotificationController::class, 'destroy'])
+        ->name('student.notifications.delete');
 
     
 });

@@ -14,7 +14,7 @@
     <div class="d-flex align-items-center gap-3">
 
         <!--==================== Bell Icon ==================-->
-        <div class="dropdown text-end">
+        {{-- <div class="dropdown text-end">
             <div class="notification-bell" data-bs-toggle="dropdown">
                 <i class="bi bi-bell fs-4 text-dark"></i>
                 <span class="notify-dot"></span>
@@ -54,7 +54,41 @@
                 </div>
 
             </div>
+        </div> --}}
+
+        <!--==================== Bell Icon ==================-->
+<div class="dropdown text-end">
+    <div class="notification-bell" data-bs-toggle="dropdown" id="notificationBell">
+        <i class="bi bi-bell fs-4 text-dark"></i>
+        <span class="notify-dot" id="notifyDot" style="display: none;"></span>
+        <span class="notify-count" id="notifyCount" style="display: none;">0</span>
+    </div>
+
+    <!-- Dropdown notification -->
+    <div class="dropdown-menu dropdown-menu-end dropdown-menu-notify" id="notificationDropdown">
+
+        <div class="notify-header d-flex justify-content-between align-items-center">
+            <span>Notifications</span>
+            <button class="btn btn-sm btn-link p-0" onclick="markAllAsRead()" id="markAllBtn" style="display: none;">
+                <small>Mark all read</small>
+            </button>
         </div>
+
+        <div id="notificationList" style="max-height: 400px; overflow-y: auto;">
+            <div class="text-center py-4">
+                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ✅ NO FOOTER - Just show count -->
+        <div class="notify-footer text-center">
+            <small class="text-muted" id="totalNotifications">0 notifications</small>
+        </div>
+
+    </div>
+</div>
 
         <div class="dropdown">
             <button class="btn btn-light d-flex align-items-center gap-2" data-bs-toggle="dropdown">
