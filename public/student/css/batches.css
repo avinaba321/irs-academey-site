@@ -302,11 +302,12 @@ table.batch-table {
     color: rgba(255, 255, 255, 0.90);
     font-weight: 800;
     font-size: 12px;
-    padding: 10px 14px;
+    padding: 12px;
     transition: .25s ease;
     display: inline-flex;
     align-items: center;
     gap: 9px;
+    margin-left: 15px;
 }
 
 .btn-soft:hover {

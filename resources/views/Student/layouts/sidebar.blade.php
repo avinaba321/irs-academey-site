@@ -59,13 +59,13 @@
          <a href="{{ route('my-courses') }}"
              class="sidebar-link {{ request()->routeIs('my-courses') ? 'active' : '' }}">
              <i class="bi bi-book"></i>
-             <span>My Courses</span>
+             <span>Attendance </span>
          </a>
 
          <a href="{{ route('student.courses') }}"
              class="sidebar-link {{ request()->routeIs('student.courses') ? 'active' : '' }}">
              <i class="bi bi-book"></i>
-             <span>Course Materials</span>
+             <span>My Courses</span>
          </a>
 
          <a href="{{ route('batches') }}" class="sidebar-link {{ request()->routeIs('batches') ? 'active' : '' }}">

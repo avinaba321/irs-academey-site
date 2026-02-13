@@ -289,10 +289,19 @@
                     <div class="divider"></div>
 
                     <div class="course-actions">
+                    @if($batch->status != 2)
+                        {{-- Show button for Running (1) and Completed (3) batches --}}
                         <a href="{{ route('student.materials.show', $batch->id) }}" class="btn btn-soft">
-                            <i class="bi bi-eye-fill"></i> View Details
+                            <i class="bi bi-eye-fill"></i>View Course Materials
                         </a>
-                    </div>
+                    @else
+                        {{-- Show message for Upcoming (2) batches --}}
+                        <div class="upcoming-message">
+                            <i class="bi bi-clock-history"></i>
+                            <span>Starts on {{ \Carbon\Carbon::parse($batch->start_date)->format('d M Y') }}</span>
+                        </div>
+                    @endif
+                </div>
 
                 </div>
             @empty

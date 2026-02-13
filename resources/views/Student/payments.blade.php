@@ -10,6 +10,41 @@
             border-radius: 12px;
             font-size: 0.85rem;
         }
+        /* Mobile Fix */
+@media (max-width: 768px) {
+
+    .page-title h3 {
+        font-size: 20px;
+    }
+
+    .p-summary .row > div {
+        margin-bottom: 12px;
+    }
+
+    /* Make tables slightly smaller */
+    .p-table th,
+    .p-table td {
+        font-size: 13px;
+        padding: 8px 6px;
+    }
+
+    /* Buttons full width inside table */
+    .btn-warning,
+    .btn-invoice {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    /* Improve badges */
+    .badge {
+        font-size: 11px;
+    }
+
+    .pill {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+}
     </style>
 @endpush
 
@@ -44,7 +79,7 @@
         {{-- ✅ PAYMENT SUMMARY --}}
         <div class="p-summary mb-3">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-6 col-md-2">
                     <small class="text-white">Payment Type</small>
                     <h6>
                         @if($payment->payment_type === 'full')
@@ -54,19 +89,19 @@
                         @endif
                     </h6>
                 </div>
-                <div class="col-md-2">
+                <div class="col-6 col-md-2">
                     <small class="text-white">Total</small>
                     <h6>₹{{ number_format($payment->total_amount, 2) }}</h6>
                 </div>
-                <div class="col-md-2">
+                <div class="col-6 col-md-2">
                     <small class="text-white">Paid</small>
                     <h6 class="text-success">₹{{ number_format($payment->paid_amount, 2) }}</h6>
                 </div>
-                <div class="col-md-2">
+               <div class="col-6 col-md-2">
                     <small class="text-white">Remaining</small>
                     <h6 class="text-danger">₹{{ number_format($payment->remaining_amount, 2) }}</h6>
                 </div>
-                <div class="col-md-2">
+              <div class="col-6 col-md-2">
                     <small class="text-white">Status</small>
                     <h6>
                         @if($payment->payment_status === 'completed')
@@ -78,7 +113,7 @@
                         @endif
                     </h6>
                 </div>
-                <div class="col-md-2">
+              <div class="col-6 col-md-2">
                     <small class="text-white">Date</small>
                     <h6>{{ $payment->created_at->format('d-m-Y') }}</h6>
                 </div>

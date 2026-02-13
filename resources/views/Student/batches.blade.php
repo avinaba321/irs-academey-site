@@ -2,6 +2,203 @@
 @section('title', 'My Profile | IrsDesign Academy')
 @push('styles')
     <link rel="stylesheet" href="{{ asset('student/css/batches.css') }}">
+    <style>
+        .btn-join-class {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            font-weight: 600;
+            padding: 1px 8px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-join-class:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+            color: #fff;
+        }
+
+        .btn-join-class:active {
+            transform: translateY(0);
+        }
+
+        .btn-join-class i {
+            font-size: 18px;
+        }
+
+        /* Alternative: Outline style */
+        .btn-join-outline {
+            background: transparent;
+            border: 2px solid #10b981;
+            color: #10b981;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-join-outline:hover {
+            background: #10b981;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Dark theme variant */
+        .btn-join-dark {
+            background: #10b981;
+            border: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-join-dark:hover {
+            background: #059669;
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.5);
+            color: #fff;
+        }
+
+        /* Pulsing animation (optional) */
+        @keyframes pulse-green {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 4px 20px rgba(16, 185, 129, 0.6);
+            }
+        }
+
+        .btn-join-pulse {
+            animation: pulse-green 2s infinite;
+        }
+
+        /* Badge Styles */
+        .badge-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .badge-status.running {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-status.upcoming {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+        }
+
+        .badge-status.completed {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+        }
+
+
+        /* =========================
+           Responsive Improvements
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .batch-head .chip-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .chip {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .batch-table th,
+            .batch-table td {
+                font-size: 13px;
+                padding: 10px 8px;
+                white-space: nowrap;
+            }
+
+            .table-wrap {
+                overflow-x: auto;
+            }
+
+            .batch-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .batch-footer .btn {
+                width: 93%;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .page-title h3 {
+                font-size: 20px;
+            }
+
+            .tabbtn {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+        @media (max-width: 768px) {
+
+    .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .action-buttons .btn,
+    .btn-join-class {
+        padding: 7px;
+        width: 93%;
+        justify-content: center;
+        text-align: center;
+        margin-left: 14px;
+    }
+
+    .upcoming-message {
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+    }
+}
+    </style>
 @endpush
 
 @section('content')
@@ -12,17 +209,6 @@
             <h3>My Batches</h3>
         </div>
 
-        <!-- Premium Tabs -->
-        <div class="tabbar">
-            <div class="row g-0">
-                <div class="col-12">
-                    <button class="tabbtn active" type="button">
-                        <i class="bi bi-laptop"></i>
-                        IT BATCH
-                    </button>
-                </div>
-            </div>
-        </div>
 
         <!-- Batch Card -->
         {{-- <div class="batch-card">
@@ -139,6 +325,21 @@
                 </div>
 
                 <!-- Timing -->
+                @php
+                    $statusText = match ($batch->status) {
+                        1 => 'RUNNING',
+                        2 => 'UPCOMING',
+                        3 => 'COMPLETED',
+                        default => 'UNKNOWN',
+                    };
+
+                    $statusClass = match ($batch->status) {
+                        1 => 'running',
+                        2 => 'upcoming',
+                        3 => 'completed',
+                        default => 'unknown',
+                    };
+                @endphp
                 <div class="table-wrap">
                     <table class="batch-table">
                         <thead>
@@ -156,13 +357,9 @@
                                 <td>{{ $batch->batch_timing }}</td>
                                 <td>{{ $batch->trainer_name }}</td>
                                 <td>
-                                    @if ($batch->status == 1)
-                                        <span class="mode-pill online">Running</span>
-                                    @elseif($batch->status == 2)
-                                        <span class="mode-pill upcoming">Upcoming</span>
-                                    @else
-                                        <span class="mode-pill offline">Completed</span>
-                                    @endif
+                                    <span class="badge-status {{ $statusClass }}">
+                                        {{ $statusText }}
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>
@@ -170,12 +367,32 @@
                 </div>
 
                 <!-- Attendance Button -->
-                <div class="batch-footer">
+                <div class="batch-footer d-flex gap-2 flex-wrap">
+
+                    {{-- ✅ Join Button (Only if Running & Meeting Link Exists) --}}
                     <button class="btn btn-soft" data-bs-toggle="modal"
                         data-bs-target="#attendanceModal{{ $batch->id }}">
+                        <i class="bi bi-eye-fill"></i>
                         View Attendance
                     </button>
+                    @if ($batch->status == 1 && !empty($batch->meeting_link))
+                        <a href="{{ $batch->meeting_link }}" target="_blank" class="btn-join-class">
+                            <i class="bi bi-camera-video-fill"></i>
+                            Join Class
+                        </a>
+                    @else
+                    <div class="upcoming-message mt-2">
+                            <i class="bi bi-clock-history"></i>
+                            <span>Starts on {{ \Carbon\Carbon::parse($batch->start_date)->format('d M Y') }}</span>
+                        </div>
+                    @endif
+                    
+
+                    {{-- Attendance Button --}}
+
+
                 </div>
+
 
             </div>
 
