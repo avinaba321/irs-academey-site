@@ -202,9 +202,20 @@ Route::middleware(['auth:student', 'guard.access:student'])->group(function () {
         ->name('batches');
 
 
-    Route::get('student/materials',
-            [StudentMaterialController::class, 'index']
-        )->name('course-material');
+    // Route::get('student/materials',
+    //         [StudentMaterialController::class, 'index']
+    //     )->name('course-material');
+
+    // Student courses list
+        Route::get('student/courses',
+            [StudentMaterialController::class, 'courses']
+        )->name('student.courses');
+
+        // Materials of specific batch
+        Route::get('student/materials/{batch}',
+            [StudentMaterialController::class, 'show']
+        )->name('student.materials.show');
+
 
         Route::post('student/materials/{id}/comment',
             [StudentMaterialController::class, 'comment']

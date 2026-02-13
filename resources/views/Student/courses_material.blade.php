@@ -519,63 +519,199 @@
     .file-badge.other { background:#6b7280; color:#fff; }
 
     /* Comments Section */
-    .comment-box{
-        margin-top:20px;
-        padding-top:20px;
-        border-top:2px solid #f3f4f6;
-    }
+    <style>
+/* Comments Section */
+.comment-box {
+    margin-top: 25px;
+    padding-top: 0;
+    border-top: none;
+}
 
-    .comment-box h6 {
-        font-weight:600;
-        margin-bottom:15px;
-        color:#1f2937;
-    }
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e5e7eb;
+}
 
-    .comment{
-        background:#f9fafb;
-        padding:12px 15px;
-        border-radius:10px;
-        margin-bottom:10px;
-        border-left:3px solid #3b82f6;
-    }
+.comment-header h6 {
+    font-weight: 600;
+    margin: 0;
+    color: #1f2937;
+    font-size: 16px;
+}
 
-    .comment-author {
-        font-weight:600;
-        color:#1f2937;
-        font-size:14px;
-    }
+.comment-count {
+    background: #e5e7eb;
+    color: #6b7280;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
 
-    .comment-text {
-        margin:5px 0;
-        color:#4b5563;
-        line-height:1.5;
-    }
+/* No Comments State */
+.no-comments {
+    text-align: center;
+    padding: 30px 20px;
+    background: #f9fafb;
+    border-radius: 10px;
+    border: 2px dashed #e5e7eb;
+    margin-bottom: 20px;
+}
 
-    .comment-time {
-        font-size:12px;
-        color:#9ca3af;
-    }
+.no-comments i {
+    font-size: 40px;
+    color: #d1d5db;
+    margin-bottom: 10px;
+}
 
-    .comment-form {
-        margin-top:15px;
-    }
+.no-comments p {
+    color: #9ca3af;
+    margin: 0;
+    font-size: 14px;
+}
 
-    .comment-form .input-group {
-        box-shadow:0 1px 3px rgba(0,0,0,.1);
-        border-radius:8px;
-        overflow:hidden;
-    }
+/* Comment Item */
+.comment {
+    background: #fff;
+    padding: 0;
+    border-radius: 0;
+    margin-bottom: 20px;
+    border: none;
+    border-left: none;
+    display: flex;
+    gap: 12px;
+}
 
+.comment-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.comment-text {
+    margin: 0 0 8px 0;
+    color: #374151;
+    line-height: 1.6;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.comment-time {
+    font-size: 12px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Comment Form */
+.comment-form {
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.comment-form:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.comment-form .input-group {
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+    display: flex;
+    align-items: stretch;
+}
+
+.comment-form input {
+    border: none;
+    padding: 14px 18px;
+    font-size: 14px;
+    background: transparent;
+    flex: 1;
+}
+
+.comment-form input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.comment-form input::placeholder {
+    color: #9ca3af;
+}
+
+.comment-form button {
+    padding: 0 24px;
+    font-weight: 600;
+    border: none;
+    background: #3b82f6;
+    color: #fff;
+    border-radius: 0;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.comment-form button:hover {
+    background: #2563eb;
+}
+
+.comment-form button i {
+    font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .comment {
+        gap: 10px;
+    }
+    
+    .comment-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+    
     .comment-form input {
-        border:1px solid #e5e7eb;
-        padding:12px 15px;
+        padding: 12px 15px;
+        font-size: 13px;
     }
-
+    
     .comment-form button {
-        padding:12px 20px;
-        font-weight:600;
+        padding: 0 18px;
+        font-size: 13px;
     }
-
+}
     .download-btn {
         display:flex;
         align-items:center;
@@ -596,7 +732,7 @@
     </div>
 
     <!-- ✅ Meeting Links Section -->
-    @if($batches->isNotEmpty())
+    {{-- @if($batch)
     <div class="meeting-links-section">
         <div class="meeting-links-title">
             <i class="bi bi-camera-video"></i>
@@ -604,24 +740,24 @@
         </div>
 
         <div class="meeting-links-grid">
-            @foreach($batches as $batch)
-                @if($batch->meeting_link)
+            @foreach($batch as $batchs)
+                @if($batchs->meeting_link)
                 <div class="meeting-card">
                     <div class="meeting-info">
                         <div class="meeting-batch-name">
-                            {{ $batch->batch_name }}
+                            {{ $batchs->batch_name }}
                         </div>
                         <div class="meeting-course-name">
-                            {{ $batch->course->title ?? $batch->course_name }}
+                            {{ $batchs->course->title ?? $batchs->course_name }}
                         </div>
-                        @if($batch->batch_timing)
+                        @if($batchs->batch_timing)
                         <div class="meeting-timing">
                             <i class="bi bi-clock"></i>
-                            {{ $batch->batch_timing }}
+                            {{ $batchs->batch_timing }}
                         </div>
                         @endif
                     </div>
-                    <a href="{{ $batch->meeting_link }}" 
+                    <a href="{{ $batchs->meeting_link }}" 
                        target="_blank" 
                        class="join-btn">
                         <i class="bi bi-box-arrow-up-right"></i>
@@ -631,7 +767,7 @@
                 @endif
             @endforeach
 
-            @if($batches->where('meeting_link', '!=', null)->count() === 0)
+            @if($batch->where('meeting_link', '!=', null)->count() === 0)
             <div class="no-meetings">
                 <i class="bi bi-camera-video-off"></i>
                 <p class="mb-0">No live classes scheduled at the moment</p>
@@ -639,7 +775,42 @@
             @endif
         </div>
     </div>
-    @endif
+    @endif --}}
+
+  {{-- Meeting Link Section - Single Batch --}}
+@if($batch->meeting_link)
+<div class="meeting-links-section">
+    <div class="meeting-links-title">
+        <i class="bi bi-camera-video"></i>
+        Live Class
+    </div>
+
+    <div class="meeting-links-grid">
+        <div class="meeting-card">
+            <div class="meeting-info">
+                <div class="meeting-batch-name">
+                    {{ $batch->batch_name }}
+                </div>
+                <div class="meeting-course-name">
+                    {{ $batch->course->title ?? $batch->course_name }}
+                </div>
+                @if($batch->batch_timing)
+                <div class="meeting-timing">
+                    <i class="bi bi-clock"></i>
+                    {{ $batch->batch_timing }}
+                </div>
+                @endif
+            </div>
+            <a href="{{ $batch->meeting_link }}" 
+               target="_blank" 
+               class="join-btn">
+                <i class="bi bi-box-arrow-up-right"></i>
+                Join
+            </a>
+        </div>
+    </div>
+</div>
+@endif
 
     @forelse($materials as $material)
 
@@ -740,7 +911,7 @@
             </div>
 
             <!-- Comments -->
-            <div class="comment-box">
+            {{-- <div class="comment-box">
                 <h6>
                     <i class="bi bi-chat-dots"></i> 
                     Comments ({{ $material->comments->count() }})
@@ -782,7 +953,59 @@
                         </button>
                     </div>
                 </form>
+            </div> --}}
+            <!-- Comments Section -->
+<div class="comment-box">
+    <div class="comment-header mt-3">
+        <i class="bi bi-chat-dots"></i>
+        <h6>Comments</h6>
+        <span class="comment-count">({{ $material->comments->count() }})</span>
+    </div>
+
+    @forelse($material->comments as $comment)
+        <div class="comment">
+            <div class="comment-avatar">
+                {{ strtoupper(substr($comment->student->full_name ?? $comment->student->name, 0, 2)) }}
             </div>
+            <div class="comment-content">
+                <div class="comment-author">
+                    {{ $comment->student->full_name ?? $comment->student->name }}
+                </div>
+                <div class="comment-text">
+                    {{ $comment->comment }}
+                </div>
+                <div class="comment-time">
+                    <i class="bi bi-clock"></i>
+                    {{ $comment->created_at->diffForHumans() }}
+                </div>
+            </div>
+        </div>
+    @empty
+        <div class="no-comments">
+            <i class="bi bi-chat-left-text"></i>
+            <p>No comments yet. Be the first to comment!</p>
+        </div>
+    @endforelse
+
+    <!-- Add Comment Form -->
+    <form method="POST" 
+          action="{{ route('materials.comment', $material->id) }}"
+          class="comment-form">
+        @csrf
+        <div class="input-group">
+            <input type="text" 
+                   name="comment"
+                   class="form-control"
+                   placeholder="Add a comment..."
+                   required
+                   maxlength="1000">
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-send-fill"></i>
+                Post
+            </button>
+        </div>
+    </form>
+</div>
 
         </div>
 

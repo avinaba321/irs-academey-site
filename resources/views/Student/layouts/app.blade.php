@@ -352,7 +352,7 @@ function createNotificationHTML(notif) {
 }
 
 // Handle notification click
-function handleNotificationClick(id, type, materialId) {
+function handleNotificationClick(id, type, materialId,batchId) {
     // Mark as read
     fetch(`/student/notifications/${id}/read`, {
         method: 'POST',
@@ -366,7 +366,7 @@ function handleNotificationClick(id, type, materialId) {
         
         // Redirect based on type
         if (type === 'material_uploaded') {
-            window.location.href = '{{ route("course-material") }}';
+            window.location.href = '/student/materials/' + batchId;
         } else if (type === 'payment_reminder') {
             window.location.href = '{{ route("student.payments") }}';
         }

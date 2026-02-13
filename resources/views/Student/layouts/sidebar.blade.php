@@ -62,8 +62,8 @@
              <span>My Courses</span>
          </a>
 
-         <a href="{{ route('course-material') }}"
-             class="sidebar-link {{ request()->routeIs('course-material') ? 'active' : '' }}">
+         <a href="{{ route('student.courses') }}"
+             class="sidebar-link {{ request()->routeIs('student.courses') ? 'active' : '' }}">
              <i class="bi bi-book"></i>
              <span>Course Materials</span>
          </a>
