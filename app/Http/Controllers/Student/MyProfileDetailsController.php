@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-
+use Carbon\Carbon;
 class MyProfileDetailsController extends Controller
 {
     public function profileIndex()
@@ -23,12 +23,16 @@ class MyProfileDetailsController extends Controller
             'full_name'          => 'required|string|max:255',
             'email'              => 'required|email|unique:students,email,' . $student->id,
             'phone_number'       => 'required|string|max:15',
-            'dob'                => 'nullable|date',
+            'dob' => 'required|date|before_or_equal:' . Carbon::now()->subYears(18)->format('Y-m-d'),
             'gender'             => 'nullable|in:male,female,other',
             'last_qualification' => 'nullable|string|max:50',
             'guardian_name'      => 'nullable|string|max:255',
             'guardian_mobile'    => 'nullable|string|max:12',
             'address'            => 'nullable|string|max:500',
+        ],[
+            'dob.before_or_equal' => 'Student must be at least 18 years old.',
+            'dob.required'        => 'Date of birth is required.',
+            'dob.date'            => 'Please enter a valid date of birth.',
         ]);
 
         $student->update([
