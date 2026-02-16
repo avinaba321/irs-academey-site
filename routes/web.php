@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminDashboradController;
 use App\Http\Controllers\AllCourseController;
 use App\Http\Controllers\Student\MyProfileDetailsController;
 use App\Http\Controllers\Student\StudentPaymentController;
+use App\Http\Controllers\Student\StudentQueryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -169,7 +170,7 @@ Route::middleware(['auth:student', 'guard.access:student'])->group(function () {
     // Route::get('/student/course_material', fn() => view('Student.courses_material'))->name('course-material');
     // Route::get('/student/batches', fn () => view('Student.batches'))->name('batches');
     // Route::get('/student/payments', fn () => view('Student.payments'))->name('payments');
-    Route::get('/student/queries', fn() => view('Student.queries'))->name('queries');
+    // Route::get('/student/queries', fn() => view('Student.queries'))->name('queries');
     Route::get('/student/certificate', fn() => view('Student.certificate'))->name('certificate');
     Route::get('/student/settings', fn() => view('Student.settings'))->name('settings');
 
@@ -235,6 +236,9 @@ Route::middleware(['auth:student', 'guard.access:student'])->group(function () {
     
     Route::delete('/student/notifications/{id}', [StudentNotificationController::class, 'destroy'])
         ->name('student.notifications.delete');
+
+    Route::get('/student/queries', [StudentQueryController::class, 'index'])->name('student.queries');
+    Route::post('/student/queries', [StudentQueryController::class, 'store'])->name('student.queries.store');
 
     
 });

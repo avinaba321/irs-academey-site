@@ -78,7 +78,7 @@
              <span>Payments</span>
          </a>
 
-         <a href="{{ route('queries') }}" class="sidebar-link {{ request()->routeIs('queries') ? 'active' : '' }}">
+         <a href="{{ route('student.queries') }}" class="sidebar-link {{ request()->routeIs('student.queries') ? 'active' : '' }}">
              <i class="bi bi-chat-left-dots"></i>
              <span>Enquiries</span>
          </a>

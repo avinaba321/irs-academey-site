@@ -1,56 +1,56 @@
 @extends('Student.layouts.app')
 @section('title', 'My Queris | IrsDesign Academy')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('student/css/queries.css') }}">
+    <link rel="stylesheet" href="{{ asset('student/css/queries.css') }}">
 @endpush
 
 @section('content')
 
- <div class="wrap">
+    <div class="wrap">
 
-            <!--  Titles -->
-            <div class="title-wrap">
-                <h4 class="page-title">My Queries</h4>
-                <p class="page-sub">Track your submitted queries and responses</p>
+        <!--  Titles -->
+        <div class="title-wrap">
+            <h4 class="page-title">My Queries</h4>
+            <p class="page-sub">Track your submitted queries and responses</p>
+        </div>
+
+        <!--  Tools bar -->
+        <div class="tool-bar">
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Search by title..." />
             </div>
 
-            <!--  Tools bar -->
-            <div class="tool-bar">
-                <div class="search-box">
-                    <i class="bi bi-search"></i>
-                    <input type="text" placeholder="Search by title..." />
+            <div class="row g-2 align-items-center justify-content-between mx-sm-auto">
+
+                <!-- Select -->
+                <div class="col-12 col-sm-auto mx-sm-auto">
+                    <div class="filter-select w-100">
+                        <select class="form-select w-100 text-white">
+                            <option>All Status</option>
+                            <option>Open</option>
+                            <option>Resolved</option>
+                            <option>Pending</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="row g-2 align-items-center justify-content-between mx-sm-auto">
-
-                    <!-- Select -->
-                    <div class="col-12 col-sm-auto mx-sm-auto">
-                        <div class="filter-select w-100">
-                            <select class="form-select w-100 text-white">
-                                <option>All Status</option>
-                                <option>Open</option>
-                                <option>Resolved</option>
-                                <option>Pending</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Button -->
-                    <div class="col-12 col-sm-auto mx-sm-auto">
-                        <button class="btn btn-new w-100" data-bs-toggle="modal" data-bs-target="#queryModal">
-                            <i class="bi bi-plus-circle-fill"></i> New Query
-                        </button>
-                    </div>
-
+                <!-- Button -->
+                <div class="col-12 col-sm-auto mx-sm-auto">
+                    <button class="btn btn-new w-100" data-bs-toggle="modal" data-bs-target="#queryModal">
+                        <i class="bi bi-plus-circle-fill"></i> New Query
+                    </button>
                 </div>
 
             </div>
 
+        </div>
 
-            <!--  Main area -->
-            <div class="main-card">
 
-                <!--  Empty State -->
+        <!--  Main area -->
+        <div class="main-card">
+
+            {{-- <!--  Empty State -->
                 <div class="empty-card">
                     <div class="empty-icon">
                         <i class="bi bi-chat-square-text-fill"></i>
@@ -60,13 +60,39 @@
                     <p class="empty-sub">
                         Start by submitting your first query to get help from faculty members
                     </p>
-                </div>
+                </div> --}}
+            @forelse($queries as $query)
+                <div class="query-item">
+                    <h6>{{ $query->title }}</h6>
+                    <p>{{ $query->details }}</p>
 
-            </div>
+                    <span
+                        class="badge 
+        @if ($query->status == 'open') bg-primary
+        @elseif($query->status == 'pending') bg-warning
+        @else bg-success @endif">
+                        {{ ucfirst($query->status) }}
+                    </span>
+
+                    <div class="small text-muted mt-1">
+                        {{ $query->created_at->diffForHumans() }}
+                    </div>
+                </div>
+            @empty
+                <div class="empty-card">
+                    <div class="empty-icon">
+                        <i class="bi bi-chat-square-text-fill"></i>
+                    </div>
+                    <h5>No queries submitted yet</h5>
+                </div>
+            @endforelse
+
 
         </div>
 
-         <!--=================ADD QUERY MODAL ==================-->
+    </div>
+
+    <!--=================ADD QUERY MODAL ==================-->
 
     <!-- ✅ Premium Query Modal -->
     <div class="modal fade query-modal" id="queryModal" tabindex="-1" aria-hidden="true">
@@ -123,8 +149,7 @@
 
 @endsection
 @push('scripts')
-
-  <script>
+    {{-- <script>
         const titleInput = document.getElementById("queryTitle");
         const detailsInput = document.getElementById("queryDetails");
         const counter = document.getElementById("countText");
@@ -154,6 +179,57 @@
         submitBtn.addEventListener("click", () => {
             alert("Query Submitted Successfully ✅");
         });
-    </script>
-    
+    </script> --}}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const titleInput = document.getElementById("queryTitle");
+    const detailsInput = document.getElementById("queryDetails");
+    const counter = document.getElementById("countText");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function updateUI() {
+        counter.innerText = titleInput.value.length;
+
+        const ok = titleInput.value.trim().length > 0 &&
+                   detailsInput.value.trim().length > 0;
+
+        submitBtn.disabled = !ok;
+    }
+
+    titleInput.addEventListener("input", updateUI);
+    detailsInput.addEventListener("input", updateUI);
+
+    submitBtn.addEventListener("click", function () {
+
+        fetch("{{ route('student.queries.store') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                title: titleInput.value,
+                details: detailsInput.value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert("Something went wrong.");
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Error submitting query.");
+        });
+
+    });
+
+});
+</script>
 @endpush

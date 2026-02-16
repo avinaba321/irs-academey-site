@@ -49,6 +49,11 @@ class Notification extends Model
         return $query->where('student_id', $studentId);
     }
 
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
     // Mark as read
     public function markAsRead()
     {

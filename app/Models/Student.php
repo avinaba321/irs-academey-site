@@ -47,7 +47,7 @@ class Student extends Authenticatable
             $namePart = strtoupper(Str::substr($student->full_name, 0, 4));
 
             // 3️⃣ Final student id
-            $student->student_id =  $cmp_name . $zeroPart . $namePart . $student->id;
+            $student->student_id = $cmp_name . $zeroPart . $namePart . $student->id;
 
             $student->save();
         });
@@ -72,4 +72,10 @@ class Student extends Authenticatable
             'batch_id'         // foreign key for related model
         )->withTimestamps();  // ✅ THIS IS IMPORTANT
     }
+
+    public function queries()
+    {
+        return $this->hasMany(StudentQuery::class);
+    }
+
 }

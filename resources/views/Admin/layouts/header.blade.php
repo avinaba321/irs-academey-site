@@ -15,7 +15,7 @@
         </div>
 
         <!--==================== Bell Icon ==================-->
-        <div class="dropdown text-end">
+        {{-- <div class="dropdown text-end">
             <div class="notification-bell" data-bs-toggle="dropdown">
                 <i class="bi bi-bell fs-4"></i>
                 <span class="notify-dot"></span>
@@ -55,7 +55,46 @@
                 </div>
 
             </div>
+        </div> --}}
+        <div class="dropdown text-end">
+            <div class="notification-bell" data-bs-toggle="dropdown">
+                <i class="bi bi-bell fs-4"></i>
+        
+                @if($unreadCount > 0)
+                    <span class="notify-dot"></span>
+                @endif
+            </div>
+        
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-notify">
+        
+                <div class="notify-header">
+                    Notifications ({{ $unreadCount }})
+                </div>
+        
+                <div style="max-height: 280px; overflow-y: auto;">
+        
+                    @forelse($notifications as $notify)
+                        <div class="notify-item">
+                            <div class="notify-avatar">
+                                {{ strtoupper(substr($notify->student->full_name ?? 'ST',0,2)) }}
+                            </div>
+                            <div>
+                                <div>{{ $notify->message }}</div>
+                                <div class="notify-time">
+                                    {{ $notify->created_at->diffForHumans() }}
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center p-3 text-muted">
+                            No notifications
+                        </div>
+                    @endforelse
+        
+                </div>
+            </div>
         </div>
+        
 
         <div class="dropdown">
             <button class="btn btn-light d-flex align-items-center gap-2" data-bs-toggle="dropdown">
