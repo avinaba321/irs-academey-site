@@ -56,7 +56,7 @@
 
             </div>
         </div> --}}
-        <div class="dropdown text-end">
+        {{-- <div class="dropdown text-end">
             <div class="notification-bell" data-bs-toggle="dropdown">
                 <i class="bi bi-bell fs-4"></i>
         
@@ -93,7 +93,43 @@
         
                 </div>
             </div>
+        </div> --}}
+        <!--==================== Admin Bell Icon ==================-->
+<div class="dropdown text-end">
+    <div class="notification-bell" data-bs-toggle="dropdown" id="adminNotificationBell">
+        <i class="bi bi-bell fs-4"></i>
+        <span class="notify-dot" id="adminNotifyDot" style="display: none;"></span>
+        <span class="notify-count" id="adminNotifyCount" style="display: none;">0</span>
+    </div>
+
+    <!-- Dropdown -->
+    <div class="dropdown-menu dropdown-menu-end dropdown-menu-notify" id="adminNotificationDropdown">
+
+        <div class="notify-header d-flex justify-content-between align-items-center">
+            <span>Notifications</span>
+            <button class="btn btn-sm btn-link p-0"
+                    onclick="adminMarkAllAsRead()"
+                    id="adminMarkAllBtn"
+                    style="display: none;">
+                <small>Mark all read</small>
+            </button>
         </div>
+
+        <div id="adminNotificationList" style="max-height: 400px; overflow-y: auto;">
+            <div class="text-center py-4">
+                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="notify-footer text-center">
+            <small class="text-muted" id="adminTotalNotifications">0 notifications</small>
+        </div>
+
+    </div>
+</div>
+
         
 
         <div class="dropdown">

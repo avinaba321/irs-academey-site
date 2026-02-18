@@ -48,23 +48,12 @@
 
 
         <!--  Main area -->
-        <div class="main-card">
+        {{-- <div class="main-card">
 
-            {{-- <!--  Empty State -->
-                <div class="empty-card">
-                    <div class="empty-icon">
-                        <i class="bi bi-chat-square-text-fill"></i>
-                    </div>
-
-                    <h5 class="empty-title">No queries submitted yet</h5>
-                    <p class="empty-sub">
-                        Start by submitting your first query to get help from faculty members
-                    </p>
-                </div> --}}
             @forelse($queries as $query)
                 <div class="query-item">
-                    <h6>{{ $query->title }}</h6>
-                    <p>{{ $query->details }}</p>
+                    <h6>Query Title : {{ $query->title }}</h6>
+                    <p>Query Details : {{ $query->details }}</p>
 
                     <span
                         class="badge 
@@ -74,7 +63,7 @@
                         {{ ucfirst($query->status) }}
                     </span>
 
-                    <div class="small text-muted mt-1">
+                    <div class="small text-secondary mt-1">
                         {{ $query->created_at->diffForHumans() }}
                     </div>
                 </div>
@@ -88,7 +77,67 @@
             @endforelse
 
 
+        </div> --}}
+        <!--  Main area -->
+<div class="main-card">
+
+    @forelse($queries as $query)
+        <div class="query-item">
+
+            <div class="d-flex justify-content-between align-items-start">
+                <h6 class="mb-1">Query Title : {{ $query->title }}</h6>
+
+                {{-- ✅ Admin Viewed Status Badge --}}
+                @if($query->is_read)
+                    <span class="badge bg-success-subtle text-success border border-success-subtle ms-2"
+                          title="Viewed {{ $query->read_at?->diffForHumans() }}">
+                        <i class="bi bi-eye-fill me-1"></i> Seen by Admin
+                    </span>
+                @else
+                    <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle ms-2">
+                        <i class="bi bi-eye-slash me-1"></i> Not yet viewed
+                    </span>
+                @endif
+            </div>
+
+            <p class="mb-2">Query Details : {{ $query->details }}</p>
+
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+
+                {{-- Query Status Badge --}}
+                <span class="badge 
+                    @if ($query->status == 'open') bg-primary
+                    @elseif($query->status == 'pending') bg-warning text-dark
+                    @else bg-success @endif">
+                    {{ ucfirst($query->status) }}
+                </span>
+
+                {{-- Submitted time --}}
+                <span class="small text-secondary">
+                    <i class="bi bi-clock me-1"></i>
+                    {{ $query->created_at->diffForHumans() }}
+                </span>
+
+                {{-- ✅ Viewed time (only if viewed) --}}
+                @if($query->is_read && $query->read_at)
+                    <span class="small text-success">
+                        <i class="bi bi-check2-circle me-1"></i>
+                        Admin viewed {{ $query->read_at->diffForHumans() }}
+                    </span>
+                @endif
+
+            </div>
         </div>
+    @empty
+        <div class="empty-card">
+            <div class="empty-icon">
+                <i class="bi bi-chat-square-text-fill"></i>
+            </div>
+            <h5>No queries submitted yet</h5>
+        </div>
+    @endforelse
+
+</div>
 
     </div>
 
@@ -181,55 +230,55 @@
         });
     </script> --}}
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
 
-    const titleInput = document.getElementById("queryTitle");
-    const detailsInput = document.getElementById("queryDetails");
-    const counter = document.getElementById("countText");
-    const submitBtn = document.getElementById("submitBtn");
+            const titleInput = document.getElementById("queryTitle");
+            const detailsInput = document.getElementById("queryDetails");
+            const counter = document.getElementById("countText");
+            const submitBtn = document.getElementById("submitBtn");
 
-    function updateUI() {
-        counter.innerText = titleInput.value.length;
+            function updateUI() {
+                counter.innerText = titleInput.value.length;
 
-        const ok = titleInput.value.trim().length > 0 &&
-                   detailsInput.value.trim().length > 0;
+                const ok = titleInput.value.trim().length > 0 &&
+                    detailsInput.value.trim().length > 0;
 
-        submitBtn.disabled = !ok;
-    }
-
-    titleInput.addEventListener("input", updateUI);
-    detailsInput.addEventListener("input", updateUI);
-
-    submitBtn.addEventListener("click", function () {
-
-        fetch("{{ route('student.queries.store') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                title: titleInput.value,
-                details: detailsInput.value
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert("Something went wrong.");
+                submitBtn.disabled = !ok;
             }
-        })
-        .catch(error => {
-            console.error(error);
-            alert("Error submitting query.");
+
+            titleInput.addEventListener("input", updateUI);
+            detailsInput.addEventListener("input", updateUI);
+
+            submitBtn.addEventListener("click", function() {
+
+                fetch("{{ route('student.queries.store') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            title: titleInput.value,
+                            details: detailsInput.value
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            alert("Something went wrong.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert("Error submitting query.");
+                    });
+
+            });
+
         });
-
-    });
-
-});
-</script>
+    </script>
 @endpush

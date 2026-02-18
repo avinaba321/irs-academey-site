@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminBatchesController;
 use App\Http\Controllers\Admin\AdminCourseController;
+use App\Http\Controllers\Admin\AdminNotificationController;
 use App\Http\Controllers\Admin\BatchMaterialController;
 use App\Http\Controllers\AdminDashboradController;
 use App\Http\Controllers\AllCourseController;
@@ -280,6 +281,21 @@ Route::middleware(['auth:admin', 'guard.access:admin', 'admin.ids'])->group(func
         '/materials/{id}',
         [BatchMaterialController::class, 'destroy']
     )->name('admin.material.delete');
+
+    Route::get('/notifications/count', [AdminNotificationController::class, 'count'])
+        ->name('admin.notifications.count');
+
+    Route::get('admin/notifications', [AdminNotificationController::class, 'index'])
+        ->name('admin.notifications.index');
+
+    Route::post('admin/notifications/{id}/read', [AdminNotificationController::class, 'markAsRead'])
+        ->name('admin.notifications.read');
+
+    Route::post('admin/notifications/read-all', [AdminNotificationController::class, 'markAllAsRead'])
+        ->name('admin.notifications.read-all');
+
+    Route::delete('admin/notifications/{id}', [AdminNotificationController::class, 'destroy'])
+        ->name('admin.notifications.delete');
 });
 
 // Route::get('/admin/courses', fn () => view('Admin.courses'))->name('admin-courses');

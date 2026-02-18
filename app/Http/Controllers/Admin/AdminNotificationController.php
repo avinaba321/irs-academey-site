@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class StudentNotificationController extends Controller
+class AdminNotificationController extends Controller
 {
    /**
-     * Get unread count - student only
+     * Get unread count - admin only
      */
     public function count()
     {
-        $student = Auth::guard('student')->user();
+        $admin = Auth::guard('admin')->user();
 
-        $count = Notification::forStudent($student->id)
+        $count = Notification::forAdmin($admin->id)
             ->unread()
             ->count();
 
@@ -24,14 +24,14 @@ class StudentNotificationController extends Controller
     }
 
     /**
-     * Get notifications - student only
+     * Get notifications - admin only
      */
     public function index()
     {
-        $student = Auth::guard('student')->user();
+        $admin = Auth::guard('admin')->user();
 
-        $notifications = Notification::forStudent($student->id)
-            ->with(['batch', 'material'])
+        $notifications = Notification::forAdmin($admin->id)
+            ->with('student')
             ->latest()
             ->limit(15)
             ->get();
@@ -40,13 +40,13 @@ class StudentNotificationController extends Controller
     }
 
     /**
-     * Mark as read - verify it belongs to student
+     * Mark as read - verify it belongs to admin
      */
     public function markAsRead($id)
     {
-        $student = Auth::guard('student')->user();
+        $admin = Auth::guard('admin')->user();
 
-        $notification = Notification::forStudent($student->id)
+        $notification = Notification::forAdmin($admin->id)
             ->findOrFail($id);
 
         $notification->markAsRead();
@@ -55,13 +55,13 @@ class StudentNotificationController extends Controller
     }
 
     /**
-     * Mark all as read - student only
+     * Mark all as read - admin only
      */
     public function markAllAsRead()
     {
-        $student = Auth::guard('student')->user();
+        $admin = Auth::guard('admin')->user();
 
-        Notification::forStudent($student->id)
+        Notification::forAdmin($admin->id)
             ->unread()
             ->update([
                 'is_read' => true,
@@ -72,13 +72,13 @@ class StudentNotificationController extends Controller
     }
 
     /**
-     * Delete - verify it belongs to student
+     * Delete - verify it belongs to admin
      */
     public function destroy($id)
     {
-        $student = Auth::guard('student')->user();
+        $admin = Auth::guard('admin')->user();
 
-        $notification = Notification::forStudent($student->id)
+        $notification = Notification::forAdmin($admin->id)
             ->findOrFail($id);
 
         $notification->delete();
