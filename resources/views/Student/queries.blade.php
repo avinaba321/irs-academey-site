@@ -2,6 +2,110 @@
 @section('title', 'My Queris | IrsDesign Academy')
 @push('styles')
     <link rel="stylesheet" href="{{ asset('student/css/queries.css') }}">
+    <style>
+        .query-card {
+            background: linear-gradient(135deg, #343943, #0f172a);
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+            transition: 0.2s ease;
+        }
+
+        .query-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .query-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .query-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .query-time {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .query-details {
+            margin: 12px 0;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .query-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status-open {
+            background: #2563eb;
+        }
+
+        .status-pending {
+            background: #f59e0b;
+            color: #000;
+        }
+
+        .status-resolved {
+            background: #10b981;
+        }
+
+        /* Viewed Badges */
+        .view-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .viewed {
+            background: rgba(16, 185, 129, .15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, .4);
+        }
+
+        .not-viewed {
+            background: rgba(148, 163, 184, .15);
+            color: #cbd5e1;
+            border: 1px solid rgba(148, 163, 184, .4);
+        }
+
+        .viewed-time {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* Empty State */
+        .empty-card {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-card i {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -79,7 +183,7 @@
 
         </div> --}}
         <!--  Main area -->
-<div class="main-card">
+        {{-- <div class="main-card">
 
     @forelse($queries as $query)
         <div class="query-item">
@@ -87,8 +191,7 @@
             <div class="d-flex justify-content-between align-items-start">
                 <h6 class="mb-1">Query Title : {{ $query->title }}</h6>
 
-                {{-- ✅ Admin Viewed Status Badge --}}
-                @if($query->is_read)
+                @if ($query->is_read)
                     <span class="badge bg-success-subtle text-success border border-success-subtle ms-2"
                           title="Viewed {{ $query->read_at?->diffForHumans() }}">
                         <i class="bi bi-eye-fill me-1"></i> Seen by Admin
@@ -104,7 +207,6 @@
 
             <div class="d-flex align-items-center gap-2 flex-wrap">
 
-                {{-- Query Status Badge --}}
                 <span class="badge 
                     @if ($query->status == 'open') bg-primary
                     @elseif($query->status == 'pending') bg-warning text-dark
@@ -112,14 +214,12 @@
                     {{ ucfirst($query->status) }}
                 </span>
 
-                {{-- Submitted time --}}
                 <span class="small text-secondary">
                     <i class="bi bi-clock me-1"></i>
                     {{ $query->created_at->diffForHumans() }}
                 </span>
 
-                {{-- ✅ Viewed time (only if viewed) --}}
-                @if($query->is_read && $query->read_at)
+                @if ($query->is_read && $query->read_at)
                     <span class="small text-success">
                         <i class="bi bi-check2-circle me-1"></i>
                         Admin viewed {{ $query->read_at->diffForHumans() }}
@@ -137,7 +237,77 @@
         </div>
     @endforelse
 
-</div>
+</div> --}}
+        <div class="main-card">
+
+            @forelse($queries as $query)
+                <div class="query-card">
+
+                    <!-- Top Row -->
+                    <div class="query-header">
+                        <div>
+                            <h6 class="query-title">
+                                {{ $query->title }}
+                            </h6>
+                            <div class="query-time">
+                                <i class="bi bi-clock"></i>
+                                {{ $query->created_at->diffForHumans() }}
+                            </div>
+                        </div>
+
+                        <!-- Viewed Badge -->
+                        @if ($query->is_read)
+                            <span class="view-badge viewed">
+                                <i class="bi bi-eye-fill"></i> Seen
+                            </span>
+                        @else
+                            <span class="view-badge not-viewed">
+                                <i class="bi bi-eye-slash"></i> Not Viewed
+                            </span>
+                        @endif
+                    </div>
+
+                    <!-- Details -->
+                    <p class="query-details">
+                        {{ $query->details }}
+                    </p>
+
+                    <!-- Bottom Row -->
+                    <div class="query-footer">
+
+                        <span
+                            class="status-badge 
+                    @if ($query->status == 'open') status-open
+                    @elseif($query->status == 'pending') status-pending
+                    @else status-resolved @endif">
+                            {{ ucfirst($query->status) }}
+                        </span>
+
+                        @if ($query->is_read && $query->read_at)
+                            <span class="viewed-time">
+                                Admin viewed {{ $query->read_at->diffForHumans() }}
+                            </span>
+                        @endif
+
+                    </div>
+
+                </div>
+            @empty
+
+                <div class="empty-card">
+                    <i class="bi bi-chat-square-text"></i>
+                    <h5>No queries submitted yet</h5>
+                </div>
+            @endforelse
+            {{-- Pagination --}}
+            @if ($queries->hasPages())
+                <div class="mt-4 d-flex justify-content-center">
+                    {{ $queries->links() }}
+                </div>
+            @endif
+
+        </div>
+
 
     </div>
 

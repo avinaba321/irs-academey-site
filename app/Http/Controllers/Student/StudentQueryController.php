@@ -13,9 +13,12 @@ class StudentQueryController extends Controller
 {
     public function index()
     {
-        $queries = StudentQuery::where('student_id', Auth::guard('student')->id())
-            ->latest()
-            ->get();
+        $student = Auth::guard('student')->user();
+
+        // ✅ Use pagination instead of get()
+        $queries = StudentQuery::where('student_id', $student->id)
+            ->latest('created_at')  // ✅ Explicit column name
+            ->paginate(5);  // ✅ Show 10 per page
 
         return view('Student.queries', compact('queries'));
     }

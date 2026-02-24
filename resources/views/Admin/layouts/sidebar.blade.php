@@ -18,7 +18,7 @@
         <nav class="sidebar-nav">
             <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><i
                     class="bi bi-speedometer2"></i><span>Dashboard</span></a>
-            <a href="./students/students-list.html" class="sidebar-link"><i
+            <a href="{{ route('all-student') }}" class="sidebar-link {{ request()->routeIs('all-student') ? 'active' : '' }}"><i
                     class="bi bi-people"></i><span>Students</span></a>
             <a href="{{ route('admin-courses') }}" class="sidebar-link {{ request()->routeIs('admin-courses') ? 'active' : '' }}"><i
                     class="bi bi-book"></i><span>Courses</span></a>

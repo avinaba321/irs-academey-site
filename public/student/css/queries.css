@@ -430,3 +430,34 @@ textarea.custom-input {
         width: 100%;
     }
 }
+
+.pagination {
+    gap: 6px;
+}
+
+.page-link {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    border-radius: 8px;
+    padding: 6px 14px;
+    transition: 0.2s ease;
+}
+
+.page-link:hover {
+    background: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+}
+
+.page-item.active .page-link {
+    background: #10b981;
+    border-color: #10b981;
+    color: #fff;
+}
+
+.page-item.disabled .page-link {
+    background: #0f172a;
+    color: #64748b;
+    border-color: #334155;
+}

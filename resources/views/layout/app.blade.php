@@ -240,6 +240,42 @@ document.addEventListener('click', function (e) {
     }
 });
 </script>
+<script>
+async function translatePage(targetLang) {
+
+    let elements = document.querySelectorAll("h1, h2, h3, h4, h5, p, span, a, button");
+
+    for (let el of elements) {
+
+        if (el.children.length === 0 && el.innerText.trim() !== "") {
+
+            try {
+                let response = await fetch("https://libretranslate.de/translate", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        q: el.innerText,
+                        source: targetLang === 'fr' ? 'en' : 'fr',
+                        target: targetLang,
+                        format: "text"
+                    })
+                });
+
+                let data = await response.json();
+
+                if (data.translatedText) {
+                    el.innerText = data.translatedText;
+                }
+
+            } catch (error) {
+                console.error("Translation error:", error);
+            }
+        }
+    }
+}
+</script>
 
 
 

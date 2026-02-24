@@ -296,6 +296,9 @@ Route::middleware(['auth:admin', 'guard.access:admin', 'admin.ids'])->group(func
 
     Route::delete('admin/notifications/{id}', [AdminNotificationController::class, 'destroy'])
         ->name('admin.notifications.delete');
+
+    Route::get('admin/all_students', fn() => view('Admin.AdminStudentListView'))->name('all-student');
 });
 
 // Route::get('/admin/courses', fn () => view('Admin.courses'))->name('admin-courses');
+
